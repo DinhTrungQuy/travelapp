@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:travelapp/component/header.dart';
 import 'package:travelapp/model/place.dart';
+import 'package:travelapp/pages/place-detail.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -50,6 +51,17 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       price: '250',
     ),
   ];
+  void navigateToPalaceDetail(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PlaceDetail(
+          place: places[index],
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -138,6 +150,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
+                                    navigateToPalaceDetail(index);
                                     print(places[index].name);
                                   },
                                   child: Container(
@@ -204,27 +217,34 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                                                 height: 5,
                                               ),
                                               Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Icon(
-                                                    Icons.star,
-                                                    color: Colors.red[400],
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.red[400],
+                                                      ),
+                                                      Text(
+                                                        places[index].rating,
+                                                        style: TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   Text(
-                                                    places[index].rating,
+                                                    '\$${places[index].price} / người',
                                                     style: TextStyle(
                                                       color: Colors.grey,
                                                     ),
                                                   ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
                                                 ],
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                '\$${places[index].price} / người',
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                ),
                                               ),
                                             ],
                                           ),
