@@ -115,21 +115,21 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                       unselectedLabelColor: Colors.grey,
                       tabs: [
                         Text(
-                          'Tất cả',
+                          'All',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 18,
                           ),
                         ),
                         Text(
-                          'Nổi bật',
+                          'Popular',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 18,
                           ),
                         ),
                         Text(
-                          'Yêu thích',
+                          'Recommended',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 18,
                           ),
                         ),
                       ],

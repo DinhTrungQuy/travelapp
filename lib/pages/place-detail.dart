@@ -164,7 +164,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                       ),
                       SizedBox(height: 20),
                       Container(
-                        height: 150,
+                        height: 300,
                         child: Expanded(
                           child: TabBarView(
                             controller: _tabController,
@@ -210,13 +210,6 @@ class _PlaceDetailState extends State<PlaceDetail>
                                         ),
                                       ),
                                       const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Image.asset(
-                                          widget.place.image,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
                                       Expanded(
                                         child: Image.asset(
                                           widget.place.image,

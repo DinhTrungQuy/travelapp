@@ -21,14 +21,17 @@ class _HeaderState extends State<Header> {
         children: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              color: Colors.red[400],
+            ),
           ),
-          const Text(
+          Text(
             'Travel App',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.black54,
+              color: Colors.red[400],
             ),
           ),
           GestureDetector(

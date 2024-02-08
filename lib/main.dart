@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
               vertical: 20,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(44),
               child: GNav(
                 backgroundColor: Colors.redAccent.shade200,
                 color: Colors.white,
@@ -69,9 +69,11 @@ class _MainPageState extends State<MainPage> {
                 gap: 8,
                 selectedIndex: 0,
                 onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
+                  setState(
+                    () {
+                      _selectedIndex = index;
+                    },
+                  );
                 },
                 tabs: [
                   GButton(
