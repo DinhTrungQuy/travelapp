@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:travelapp/pages/add-to-cart.dart';
 import 'package:travelapp/pages/favoritepage.dart';
 import 'package:travelapp/pages/homepage.dart';
 import 'package:travelapp/pages/profilepage.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       home: const MainPage(),
       debugShowCheckedModeBanner: false,
       routes: {
-        
+        '/addtocart': (context) => const AddToCartPage(),
       },
     );
   }
@@ -60,10 +61,10 @@ class _MainPageState extends State<MainPage> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: GNav(
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.redAccent.shade200,
                 color: Colors.white,
                 activeColor: Colors.white,
-                tabBackgroundColor: Colors.grey.shade800,
+                tabBackgroundColor: Colors.red.shade600,
                 padding: EdgeInsets.all(16),
                 gap: 8,
                 selectedIndex: 0,

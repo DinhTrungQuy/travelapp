@@ -19,7 +19,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       description:
           'Hạ Long Bay is a UNESCO World Heritage Site and popular travel destination in Quảng Ninh Province, Vietnam.',
       image: 'assets/images/places/halongbay.jpg',
-      rating: '4.9',
+      rating: '4.5',
       location: 'Quảng Ninh Province, Vietnam',
       price: '100',
     ),
@@ -28,7 +28,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       description:
           'Sa Pa is a town in the Hoàng Liên Son Mountains of northwestern Vietnam.',
       image: 'assets/images/places/sapa.jpg',
-      rating: '4.8',
+      rating: '3.0',
       location: 'Lào Cai Province, Vietnam',
       price: '150',
     ),
@@ -37,7 +37,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       description:
           'Hội An is a city on Vietnam’s central coast known for its well-preserved Ancient Town.',
       image: 'assets/images/places/hoian.jpg',
-      rating: '4.7',
+      rating: '5.0',
       location: 'Quảng Nam Province, Vietnam',
       price: '200',
     ),
@@ -46,7 +46,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       description:
           'Phú Quốc is a Vietnamese island off the coast of Cambodia in the Gulf of Thailand.',
       image: 'assets/images/places/phuquoc.jpg',
-      rating: '4.6',
+      rating: '2.5',
       location: 'Kiên Giang Province, Vietnam',
       price: '250',
     ),
@@ -140,6 +140,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   Expanded(
                     child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
                       controller: _tabController,
                       dragStartBehavior: DragStartBehavior.down,
                       children: [

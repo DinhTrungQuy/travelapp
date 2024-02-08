@@ -9,13 +9,13 @@ class BackArrowButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
+        color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(50),
       ),
       child: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_back_rounded,
-          color: Colors.black,
+          color: Colors.red[400],
         ),
         onPressed: onTap,
       ),

@@ -9,13 +9,13 @@ class BookmarkButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
+        color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(100),
       ),
       child: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.bookmark,
-          color: Colors.black,
+          color: Colors.red[400],
         ),
         onPressed: onTap,
       ),

@@ -8,6 +8,10 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
+  void navigateToCart() {
+    Navigator.pushNamed(context, '/addtocart');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,9 +31,12 @@ class _HeaderState extends State<Header> {
               color: Colors.black54,
             ),
           ),
-          Image.asset(
-            'assets/images/default-user.png',
-            height: 40,
+          GestureDetector(
+            onTap: navigateToCart,
+            child: Image.asset(
+              'assets/images/default-user.png',
+              height: 40,
+            ),
           ),
         ],
       ),
