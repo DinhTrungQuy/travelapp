@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:travelapp/component/header.dart';
 import 'package:travelapp/model/place.dart';
 import 'package:travelapp/pages/place-detail.dart';
 
@@ -75,7 +74,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Header(),
+          // Header(),
           Expanded(
             child: Container(
               padding: EdgeInsets.only(

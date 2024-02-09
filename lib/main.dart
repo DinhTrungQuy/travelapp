@@ -48,7 +48,32 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    void navigateToCart() {
+      Navigator.pushNamed(context, '/addtocart');
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.red[400],
+        title: Text(
+          'Travel App',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.red[400],
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            child: GestureDetector(
+              onTap: navigateToCart,
+              child: Icon(Icons.notifications_none_outlined, color: Colors.red[400]),
+            ),
+          ),
+        ],
+      ),
       body: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
@@ -77,7 +102,7 @@ class _MainPageState extends State<MainPage> {
                 },
                 tabs: [
                   GButton(
-                    icon: Icons.home,
+                    icon: Icons.home_outlined,
                     text: 'Home',
                   ),
                   GButton(
@@ -89,7 +114,7 @@ class _MainPageState extends State<MainPage> {
                     text: 'Wishlist',
                   ),
                   GButton(
-                    icon: Icons.person_outline,
+                    icon: Icons.person_outline_rounded,
                     text: 'Profile',
                   ),
                 ],

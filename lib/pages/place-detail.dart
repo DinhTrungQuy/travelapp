@@ -27,17 +27,24 @@ class _PlaceDetailState extends State<PlaceDetail>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackArrowButton(
-          onTap: () {
-            Navigator.pop(context);
-          },
+        leadingWidth: 71,
+        leading: Container(
+          margin: EdgeInsets.only(left: 15),
+          child: BackArrowButton(
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         actions: [
-          BookmarkButton(
-            onTap: () async {
-              //TODO: async bookmark
-              print('Bookmark Button');
-            },
+          Container(
+            margin: const EdgeInsets.only(right: 15),
+            child: BookmarkButton(
+              onTap: () async {
+                //TODO: async bookmark
+                print('Bookmark Button');
+              },
+            ),
           ),
         ],
         backgroundColor: Colors.transparent,
@@ -70,7 +77,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.7),
+                        Colors.black.withOpacity(0.4),
                       ],
                     ),
                   ),
@@ -164,7 +171,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                       ),
                       SizedBox(height: 20),
                       Container(
-                        height: 300,
+                        height: 150,
                         child: Expanded(
                           child: TabBarView(
                             controller: _tabController,

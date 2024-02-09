@@ -1,7 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class WishlistButton extends StatelessWidget {
-  const WishlistButton({super.key});
+  final void Function() onTap;
+  const WishlistButton({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class WishlistButton extends StatelessWidget {
           Icons.favorite,
           color: Colors.red[400],
         ),
-        onPressed: () {},
+        onPressed: onTap,
       ),
     );
   }
