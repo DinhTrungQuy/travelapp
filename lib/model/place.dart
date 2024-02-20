@@ -19,23 +19,23 @@ class Place {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'name': name,
-      'description': description,
-      'image': image,
-      'rating': rating,
-      'location': location,
-      'price': price,
+      'Name': name,
+      'Description': description,
+      'Image': image,
+      'Rating': rating,
+      'Location': location,
+      'Price': price,
     };
   }
 
   factory Place.fromMap(Map<String, dynamic> map) {
     return Place(
-      name: map['name'] as String,
-      description: map['description'] as String,
-      image: map['image'] as String,
-      rating: map['rating'] as String,
-      location: map['location'] as String,
-      price: map['price'] as double,
+      name: map['Name'] as String,
+      description: map['Description'] as String,
+      image: map['Image'] as String,
+      rating: map['Rating'] as String,
+      location: map['Location'] as String,
+      price: map['Price'] as double,
     );
   }
 
