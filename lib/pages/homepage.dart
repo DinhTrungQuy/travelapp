@@ -20,7 +20,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       image: 'assets/images/places/halongbay.jpg',
       rating: '4.5',
       location: 'Quảng Ninh Province, Vietnam',
-      price: '100',
+      price: 100,
     ),
     Place(
       name: 'Sapa',
@@ -29,7 +29,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       image: 'assets/images/places/sapa.jpg',
       rating: '3.0',
       location: 'Lào Cai Province, Vietnam',
-      price: '150',
+      price: 150,
     ),
     Place(
       name: 'Hội An',
@@ -38,7 +38,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       image: 'assets/images/places/hoian.jpg',
       rating: '5.0',
       location: 'Quảng Nam Province, Vietnam',
-      price: '200',
+      price: 200,
     ),
     Place(
       name: 'Phú Quốc',
@@ -47,7 +47,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
       image: 'assets/images/places/phuquoc.jpg',
       rating: '2.5',
       location: 'Kiên Giang Province, Vietnam',
-      price: '250',
+      price: 250,
     ),
   ];
   void navigateToPalaceDetail(int index) {

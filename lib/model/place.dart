@@ -7,7 +7,7 @@ class Place {
   final String image;
   final String rating;
   final String location;
-  final String price;
+  final double price;
   Place({
     required this.name,
     required this.description,
@@ -35,7 +35,7 @@ class Place {
       image: map['image'] as String,
       rating: map['rating'] as String,
       location: map['location'] as String,
-      price: map['price'] as String,
+      price: map['price'] as double,
     );
   }
 

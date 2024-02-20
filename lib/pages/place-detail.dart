@@ -25,6 +25,7 @@ class _PlaceDetailState extends State<PlaceDetail>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 71,
@@ -61,7 +62,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                 child: Image.asset(
                   widget.place.image,
                   width: double.maxFinite,
-                  height: 400,
+                  height: size.height / 2,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -70,7 +71,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 400,
+                  height: size.height / 2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -171,7 +172,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                       ),
                       SizedBox(height: 20),
                       Container(
-                        height: 150,
+                        height: size.height * 0.3,
                         child: Expanded(
                           child: TabBarView(
                             controller: _tabController,
@@ -260,7 +261,7 @@ class _PlaceDetailState extends State<PlaceDetail>
             bottom: 0,
             left: 0,
             right: 0,
-            child: AddToCartBar(price: widget.place.price),
+            child: AddToCartBar(price: widget.place.price.toString()),
           ),
         ],
       ),

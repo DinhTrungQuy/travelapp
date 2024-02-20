@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:travelapp/model/selected_index.dart';
 import 'package:travelapp/pages/add-to-cart.dart';
 import 'package:travelapp/pages/favoritepage.dart';
 import 'package:travelapp/pages/homepage.dart';
@@ -15,17 +17,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SelectedIndex()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MainPage(),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/addtocart': (context) => const AddToCartPage(),
+        },
       ),
-      home: const MainPage(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/addtocart': (context) => const AddToCartPage(),
-      },
     );
   }
 }
@@ -38,7 +45,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
   final List<Widget> _widgetOptions = [
     HomePage(),
     SearchPage(),
@@ -48,6 +54,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
     void navigateToCart() {
       Navigator.pushNamed(context, '/addtocart');
     }
@@ -69,7 +76,8 @@ class _MainPageState extends State<MainPage> {
             margin: EdgeInsets.only(right: 15),
             child: GestureDetector(
               onTap: navigateToCart,
-              child: Icon(Icons.notifications_none_outlined, color: Colors.red[400]),
+              child: Icon(Icons.notifications_none_outlined,
+                  color: Colors.red[400]),
             ),
           ),
         ],
@@ -77,7 +85,7 @@ class _MainPageState extends State<MainPage> {
       body: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
-          _widgetOptions.elementAt(_selectedIndex),
+          _widgetOptions.elementAt(_selectedIndex.index),
           Container(
             margin: EdgeInsets.symmetric(
               horizontal: 15,
@@ -92,13 +100,9 @@ class _MainPageState extends State<MainPage> {
                 tabBackgroundColor: Colors.red.shade600,
                 padding: EdgeInsets.all(16),
                 gap: 8,
-                selectedIndex: 0,
+                selectedIndex: _selectedIndex.index,
                 onTabChange: (index) {
-                  setState(
-                    () {
-                      _selectedIndex = index;
-                    },
-                  );
+                  _selectedIndex.setIndex(index);
                 },
                 tabs: [
                   GButton(
