@@ -7,7 +7,6 @@ class OrderItem {
   String? selectedSize;
 
   /// Selected color of place; This can be null
-  String? selectedColor;
 
-  OrderItem({required this.place, this.selectedSize, this.selectedColor});
+  OrderItem({required this.place, this.selectedSize});
 }

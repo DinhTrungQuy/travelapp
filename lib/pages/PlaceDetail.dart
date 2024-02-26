@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:travelapp/component/BookmarkButton.dart';
 import 'package:travelapp/component/add-to-cart-bar.dart';
 import 'package:travelapp/component/back-button.dart';
-import 'package:travelapp/component/bookmark-button.dart';
+
 import 'package:travelapp/model/place.dart';
 
 class PlaceDetail extends StatefulWidget {
@@ -28,6 +29,7 @@ class _PlaceDetailState extends State<PlaceDetail>
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         leadingWidth: 71,
         leading: Container(
           margin: EdgeInsets.only(left: 15),
@@ -40,9 +42,9 @@ class _PlaceDetailState extends State<PlaceDetail>
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 15),
-            child: BookmarkButton(
+            child: WishlistButton(
               onTap: () async {
-                //TODO: async bookmark
+                //TODO: async Bookmark
                 print('Bookmark Button');
               },
             ),
@@ -59,8 +61,8 @@ class _PlaceDetailState extends State<PlaceDetail>
                 top: 0,
                 left: 0,
                 right: 0,
-                child: Image.asset(
-                  widget.place.image,
+                child: Image.network(
+                  widget.place.imageUrl,
                   width: double.maxFinite,
                   height: size.height / 2,
                   fit: BoxFit.cover,
@@ -87,7 +89,7 @@ class _PlaceDetailState extends State<PlaceDetail>
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: 50,
+                bottom: 0,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -211,16 +213,16 @@ class _PlaceDetailState extends State<PlaceDetail>
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: Image.asset(
-                                          widget.place.image,
+                                        child: Image.network(
+                                          widget.place.imageUrl,
                                           height: 100,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                       const SizedBox(width: 10),
                                       Expanded(
-                                        child: Image.asset(
-                                          widget.place.image,
+                                        child: Image.network(
+                                          widget.place.imageUrl,
                                           height: 100,
                                           fit: BoxFit.cover,
                                         ),
@@ -240,11 +242,6 @@ class _PlaceDetailState extends State<PlaceDetail>
                                     ),
                                   ),
                                   const SizedBox(height: 10),
-                                  // Image.asset(
-                                  //   'assets/images/map.png',
-                                  //   height: 200,
-                                  //   fit: BoxFit.cover,
-                                  // ),
                                 ],
                               ),
                             ],
@@ -261,7 +258,9 @@ class _PlaceDetailState extends State<PlaceDetail>
             bottom: 0,
             left: 0,
             right: 0,
-            child: AddToCartBar(price: widget.place.price.toString()),
+            child: AddToCartBar(
+              place: widget.place,
+            ),
           ),
         ],
       ),

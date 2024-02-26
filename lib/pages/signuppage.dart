@@ -1,27 +1,52 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:travelapp/component/back-button.dart';
-// import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:travelapp/component/custom-text-field.dart';
+import 'package:http/http.dart' as http;
+import 'package:travelapp/model/user.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
 
-  // final cpfFormatter = MaskTextInputFormatter(
-  //   mask: '###.###.###-##',
-  //   filter: {
-  //     '#': RegExp(
-  //       r'[0-9]',
-  //     ),
-  //   },
-  // );
-  // final celularFormatter = MaskTextInputFormatter(
-  //   mask: '## ## # ####-####',
-  //   filter: {
-  //     '#': RegExp(
-  //       r'[0-9]',
-  //     ),
-  //   },
-  // );
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController usernameController = TextEditingController();
+
+  TextEditingController fullnameController = TextEditingController();
+
+  TextEditingController phoneController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  void handleSignUp(User user) async {
+    final response =
+        await http.post(Uri.parse("https://quydt.speak.vn/api/auth/register"),
+            headers: <String, String>{
+              'Content-type': 'application/json; charset=utf-8',
+            },
+            body: jsonEncode(<String, String>{
+              "username": user.username,
+              "password": user.password,
+              "email": user.email,
+              "fullname": user.fullname,
+              "phone": user.phone,
+              "role": user.role,
+            }));
+    if (response.statusCode == 200) {
+      print("Sign up success");
+    } else {
+      print("Sign up failed");
+    }
+    // Response<User> dataResponse = Response.fromJson(data);
+    // print(dataResponse.data);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -86,25 +111,29 @@ class SignUpPage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          const CustomTextField(
+                          CustomTextField(
+                            controller: usernameController,
                             icon: Icons.person,
-                            label: 'Name',
+                            label: 'User Name',
                           ),
                           CustomTextField(
-                            icon: Icons.file_copy_rounded,
-                            label: 'Individual Taxpayer Registration',
-                            // inputFormatters: [cpfFormatter],
+                            controller: fullnameController,
+                            icon: Icons.badge,
+                            label: 'Full Name',
                           ),
                           CustomTextField(
+                            controller: phoneController,
                             icon: Icons.phone,
-                            label: 'Cell phone',
+                            label: 'Phone Number',
                             // inputFormatters: [celularFormatter],
                           ),
-                          const CustomTextField(
+                          CustomTextField(
+                            controller: emailController,
                             icon: Icons.mail,
                             label: 'Email',
                           ),
-                          const CustomTextField(
+                          CustomTextField(
+                            controller: passwordController,
                             icon: Icons.lock,
                             label: 'Password',
                             isSecret: true,
@@ -116,7 +145,16 @@ class SignUpPage extends StatelessWidget {
                                     backgroundColor: Colors.red[400],
                                   ),
                                   onPressed: () {
+                                    User user = User(
+                                      username: usernameController.text,
+                                      fullname: fullnameController.text,
+                                      phone: phoneController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      imageUrl: '',
+                                    );
                                     //TODO: create account
+                                    handleSignUp(user);
                                     Navigator.of(context).pop();
                                   },
                                   child: const Text(

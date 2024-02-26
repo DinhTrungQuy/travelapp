@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/component/mybutton.dart';
+import 'package:travelapp/model/place.dart';
+import 'package:travelapp/pages/BookingPage.dart';
 
 class AddToCartBar extends StatefulWidget {
-  final String price;
-  const AddToCartBar({super.key, required this.price});
+  final Place place;
+  const AddToCartBar({super.key, required this.place});
 
   @override
   State<AddToCartBar> createState() => _AddToCartBarState();
@@ -27,7 +29,7 @@ class _AddToCartBarState extends State<AddToCartBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Total: ${widget.price} \$',
+            'Total: ${widget.place.price} \$',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -36,6 +38,10 @@ class _AddToCartBarState extends State<AddToCartBar> {
           MyButton(
             onTap: () {
               //TODO: Add to cart function
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookingPage(place: widget.place)));
               print('Book now Button');
             },
             title: 'Book now',

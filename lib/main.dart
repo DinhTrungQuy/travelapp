@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:travelapp/model/selected_index.dart';
+import 'package:travelapp/model/Wishlist.dart';
+import 'package:travelapp/model/cart.dart';
+import 'package:travelapp/model/SelectedIndex.dart';
 import 'package:travelapp/pages/add-to-cart.dart';
-import 'package:travelapp/pages/favoritepage.dart';
-import 'package:travelapp/pages/homepage.dart';
-import 'package:travelapp/pages/profilepage.dart';
+import 'package:travelapp/pages/WishlistPage.dart';
+import 'package:travelapp/pages/HomePage.dart';
+import 'package:travelapp/pages/ProfilePage.dart';
 import 'package:travelapp/pages/searchpage.dart';
 
 void main() {
@@ -20,6 +22,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SelectedIndex()),
+        ChangeNotifierProvider(create: (context) => Cart()),
+        ChangeNotifierProvider(create: (context) => Wishlist()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -48,7 +52,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _widgetOptions = [
     HomePage(),
     SearchPage(),
-    FavoritePage(),
+    WishlistPage(),
     ProfilePage(),
   ];
 
@@ -61,13 +65,15 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.red[400],
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red[400],
+        scrolledUnderElevation: 0,
         title: Text(
           'Travel App',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.red[400],
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
@@ -76,8 +82,8 @@ class _MainPageState extends State<MainPage> {
             margin: EdgeInsets.only(right: 15),
             child: GestureDetector(
               onTap: navigateToCart,
-              child: Icon(Icons.notifications_none_outlined,
-                  color: Colors.red[400]),
+              child:
+                  Icon(Icons.notifications_none_outlined, color: Colors.white),
             ),
           ),
         ],

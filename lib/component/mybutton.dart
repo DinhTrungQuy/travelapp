@@ -21,7 +21,9 @@ class MyButton extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.white,
+            
           ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

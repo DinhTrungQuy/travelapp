@@ -1,21 +1,81 @@
-// import 'package:animated_text_kit/animated_text_kit.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:onlydigital/src/pages/auth/sign_up_screen.dart';
 import 'package:travelapp/component/custom-text-field.dart';
-import 'package:travelapp/model/selected_index.dart';
+import 'package:travelapp/model/Response.dart';
+import 'package:travelapp/model/SelectedIndex.dart';
 import 'package:travelapp/pages/signuppage.dart';
-// import 'package:onlydigital/src/pages/base/base_screen.dart';
-// import 'package:onlydigital/src/config/custom_colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool loginStatus = false;
+  String errorMessage = "";
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  Future<void> handleLogin(String username, String password) async {
+    final response = await http.post(
+      Uri.parse('https://quydt.speak.vn/api/auth/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+    var data = jsonDecode(response.body);
+    Response dataResponse = Response.fromJson(data);
+    if (dataResponse.status == 0) {
+      loginStatus = true;
+      print(dataResponse.data);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("token","");
+      await prefs.setString(
+          "token",
+          dataResponse.data.containsKey('access_token')
+              ? dataResponse.data['access_token']
+              : '');
+    } else {
+      errorMessage = "Username or password is incorrect";
+    }
+    // throw Exception('Username or password is incorrect');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginStatus = false;
+    errorMessage = "";
+  }
 
   @override
   Widget build(BuildContext context) {
     final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.red[400],
       body: SingleChildScrollView(
         child: SizedBox(
@@ -78,14 +138,22 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    const CustomTextField(
-                      icon: Icons.mail,
-                      label: 'Enter your email',
+                    CustomTextField(
+                      controller: usernameController,
+                      icon: Icons.person,
+                      label: 'Enter your username',
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: passwordController,
                       icon: Icons.lock,
                       label: 'Enter your password',
                       isSecret: true,
+                    ),
+                    Text(
+                      errorMessage,
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
                     ),
                     SizedBox(
                       height: 50,
@@ -96,13 +164,16 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(45),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          await handleLogin(usernameController.text.trimRight(),
+                              passwordController.text);
                           //TODO: login
-                          Navigator.pop(context);
-                          _selectedIndex.setIndex(0);
-
+                          if (loginStatus = true) {
+                            Navigator.pop(context);
+                            _selectedIndex.setIndex(0);
+                          }
                         },
-                        child: const Text(
+                        child: Text(
                           'Sign in',
                           style: TextStyle(
                               fontFamily: 'OpenSans',

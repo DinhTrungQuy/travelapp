@@ -1,45 +1,58 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 class Place {
+  final String? id;
   final String name;
   final String description;
-  final String image;
+  final String imageUrl;
   final String rating;
   final String location;
-  final double price;
+  final int price;
+  final int durationDays;
+  final bool popular;
+  final bool recommended;
+  final int direction;
   Place({
+    required this.id,
     required this.name,
     required this.description,
-    required this.image,
+    required this.imageUrl,
     required this.rating,
     required this.location,
     required this.price,
+    required this.durationDays,
+    required this.popular,
+    required this.recommended,
+    required this.direction,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'Name': name,
-      'Description': description,
-      'Image': image,
-      'Rating': rating,
-      'Location': location,
-      'Price': price,
-    };
-  }
-
-  factory Place.fromMap(Map<String, dynamic> map) {
+  factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
-      name: map['Name'] as String,
-      description: map['Description'] as String,
-      image: map['Image'] as String,
-      rating: map['Rating'] as String,
-      location: map['Location'] as String,
-      price: map['Price'] as double,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      imageUrl: json['imageUrl'],
+      rating: json['rating'],
+      location: json['location'],
+      price: json['price'],
+      durationDays: json['durationDays'],
+      popular: json['popular'],
+      recommended: json['recommended'],
+      direction: json['direction'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Place.fromJson(String source) => Place.fromMap(json.decode(source) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'imageUrl': imageUrl,
+      'rating': rating,
+      'location': location,
+      'price': price,
+      'durationDays': durationDays,
+      'popular': popular,
+      'recommended': recommended,
+      'direction': direction,
+    };
+  }
 }
