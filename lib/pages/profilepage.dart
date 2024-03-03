@@ -1,14 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/model/User.dart';
-import 'package:travelapp/pages/LoginPage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:travelapp/model/LoginStatus.dart';
+import 'package:travelapp/model/SelectedIndex.dart';
+import 'package:travelapp/model/User.dart';
+import 'package:travelapp/pages/EditProfilePage.dart';
+import 'package:travelapp/pages/LoginPage.dart';
+import 'package:travelapp/pages/MyTourPage.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final String token;
+  
+  const ProfilePage({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -16,51 +28,40 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool loading = true;
-  bool loginStatus = false;
-  String token = '';
+
   User user = User(username: '', password: '');
-  void getToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token") ?? '';
-    if (token != '') {
-      setState(() {
-        loginStatus = true;
-      });
-    }
-    setState(() {
-      loading = false;
-    });
-  }
 
   Future<User> getUser() async {
-    // TODO: Thieu 401 authentication
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString("token") ?? "";
     final response = await http.get(
       Uri.parse('https://quydt.speak.vn/api/user'),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + token,
+        HttpHeaders.authorizationHeader: "Bearer " + widget.token,
       },
     );
+    print('ProfilePage.dart: ${widget.token}');
     if (response.statusCode != 200) {
-      loginStatus = false;
       return User(username: '', password: '');
     }
-    return User.fromJson(jsonDecode(response.body));
+    User userData = User.fromJson(jsonDecode(response.body));
+    return userData;
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getToken();
     getUser().then((value) => setState(() {
           user = value;
+          loading = false;
         }));
   }
 
   @override
   Widget build(BuildContext context) {
+    final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
+    final _loginStatus = Provider.of<LoginStatus>(context, listen: true);
+    print('ProfilePage.dart: ${_loginStatus.isLoggedIn}');
+    print('ProfilePage.dart: ${widget.token}');
     return Scaffold(
       body: loading
           ? Center(child: CircularProgressIndicator())
@@ -69,32 +70,43 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   height: 200,
                   child: Center(
-                    child: loginStatus
+                    child: _loginStatus.isLoggedIn
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.network(
-                                'https://quydt.speak.vn/image/default-user.png',
-                                fit: BoxFit.contain,
-                                width: 70,
-                                height: 70,
+                              ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(70)),
+                                child: Image.network(
+                                  user.imageUrl != ''
+                                      ? user.imageUrl
+                                      : 'https://quydt.speak.vn/image/default-user.png',
+                                  fit: BoxFit.cover,
+                                  width: 70,
+                                  height: 70,
+                                ),
                               ),
                               SizedBox(height: 10),
                               Text(
-                                user.fullname,
+                                'Hi ${user.fullname.toUpperCase()}',
                                 style: TextStyle(
                                   color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
                               ),
                             ],
                           )
                         : Column(
                             children: [
-                              Image.network(
-                                'https://quydt.speak.vn/image/default-user.png',
-                                fit: BoxFit.contain,
-                                width: 70,
-                                height: 70,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.network(
+                                  'https://quydt.speak.vn/image/default-user.png',
+                                  fit: BoxFit.cover,
+                                  width: 70,
+                                  height: 70,
+                                ),
                               ),
                               SizedBox(height: 10),
                               const Text(
@@ -138,9 +150,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Expanded(
                       child: ListTile(
-                        title: const Text('My Orders'),
-                        leading: const Icon(Icons.shopping_bag_outlined),
-                        onTap: () {},
+                        title: const Text('My Tour'),
+                        leading: const Icon(Icons.card_travel_outlined),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyTourPage(token: widget.token)));
+                        },
                       ),
                     ),
                   ],
@@ -151,7 +169,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListTile(
                         title: const Text('My Profile'),
                         leading: const Icon(Icons.person_outline),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfilePage(
+                                        user: user,
+                                      )));
+                        },
                       ),
                     ),
                   ],
@@ -162,7 +187,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListTile(
                         title: const Text('My Wishlist'),
                         leading: const Icon(Icons.favorite_border),
-                        onTap: () {},
+                        onTap: () {
+                          _selectedIndex.setIndex(2);
+                        },
                       ),
                     ),
                   ],
@@ -214,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                loginStatus
+                _loginStatus.isLoggedIn
                     ? Row(
                         children: [
                           Expanded(
@@ -222,16 +249,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: const Text('Logout'),
                               leading: const Icon(Icons.logout),
                               onTap: () async {
-                                setState(() {
-                                  loginStatus = false;
-                                });
+                                print(_loginStatus.isLoggedIn);
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.remove("token");
+                                prefs.remove("userId");
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => LoginPage()));
+                                setState(() {
+                                  _loginStatus.setLoginStatus(false);
+                                  print('rerendering');
+                                });
+                                print(_loginStatus.isLoggedIn);
                               },
                             ),
                           ),

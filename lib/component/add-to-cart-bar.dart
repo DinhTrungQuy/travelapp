@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelapp/component/mybutton.dart';
 import 'package:travelapp/model/place.dart';
 import 'package:travelapp/pages/BookingPage.dart';
@@ -12,6 +13,25 @@ class AddToCartBar extends StatefulWidget {
 }
 
 class _AddToCartBarState extends State<AddToCartBar> {
+  AlertDialog alert = AlertDialog(
+    title: Text("AlertDialog"),
+    content:
+        Text("Would you like to continue learning how to use Flutter alerts?"),
+    actions: [
+      TextButton(
+        child: Text("Yes"),
+        onPressed: () {
+          print("You choose Yes");
+        },
+      ),
+      TextButton(
+        child: Text("No"),
+        onPressed: () {
+          print("You choose No");
+        },
+      ),
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,12 +56,27 @@ class _AddToCartBarState extends State<AddToCartBar> {
             ),
           ),
           MyButton(
-            onTap: () {
-              //TODO: Add to cart function
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BookingPage(place: widget.place)));
+            onTap: () async {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+
+              if (prefs.getString('token') == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      "You need to login first.",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    backgroundColor: Colors.red[400],
+                  ),
+                );
+              } else
+                //TODO: Add to cart function
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BookingPage(place: widget.place)));
               print('Book now Button');
             },
             title: 'Book now',

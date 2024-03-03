@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelapp/component/mybutton.dart';
+import 'package:travelapp/model/Booking.dart';
 import 'package:travelapp/model/place.dart';
+import 'package:http/http.dart' as http;
 
 class BookingPage extends StatefulWidget {
   final Place place;
@@ -13,6 +19,7 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   int quantityCount = 0;
+  bool loading = true;
   String checkOutTime = "";
   final dateController = TextEditingController();
   void incrementQuantity() {
@@ -29,6 +36,24 @@ class _BookingPageState extends State<BookingPage> {
     });
   }
 
+  Future<void> handleBooking(Booking booking) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token') ?? '';
+    print('BookingPage.dart placeId: ${booking.placeId}');
+    await http.post(Uri.parse('https://quydt.speak.vn/api/booking'),
+        headers: {
+          'Content-Type': 'application/json',
+          HttpHeaders.authorizationHeader: "Bearer $token",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "placeId": booking.placeId,
+          "quantity": booking.quantity,
+          "checkInTime": booking.checkInTime,
+          "totalPrice": booking.totalPrice,
+          "status": 0,
+        }));
+  }
+
   String updateCheckoutTime(String checkinTime, int durationDays) {
     if (checkinTime.isEmpty) {
       return '';
@@ -41,10 +66,11 @@ class _BookingPageState extends State<BookingPage> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
+
     dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
     checkOutTime =
         updateCheckoutTime(dateController.text, widget.place.durationDays);
-    super.initState();
   }
 
   @override
@@ -53,6 +79,7 @@ class _BookingPageState extends State<BookingPage> {
       appBar: AppBar(
         title: Text('Booking'),
         centerTitle: true,
+        scrolledUnderElevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -74,7 +101,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Icon(
                   Icons.location_on,
@@ -121,7 +148,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Icon(
                   Icons.calendar_today,
@@ -193,7 +220,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Icon(
                   Icons.calendar_today,
@@ -240,7 +267,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Icon(
                   Icons.calendar_today,
@@ -287,7 +314,7 @@ class _BookingPageState extends State<BookingPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Icon(
                   Icons.people,
@@ -301,7 +328,7 @@ class _BookingPageState extends State<BookingPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Quantity",
+                    "Passenger(s)",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -330,6 +357,45 @@ class _BookingPageState extends State<BookingPage> {
           SizedBox(
             height: 20,
           ),
+          Text("Payment Summary",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.place.name,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "${quantityCount}x${widget.place.price}\$  ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                "${widget.place.price * quantityCount}\$",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -340,37 +406,74 @@ class _BookingPageState extends State<BookingPage> {
             height: 20,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.attach_money,
-                  color: Colors.red,
+              Text(
+                "Subtotal",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                width: 10,
+              Text(
+                "${widget.place.price * quantityCount}\$",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Total",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    "${widget.place.price * quantityCount}\$",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Discout",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                "0\$",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 1,
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.2),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "${widget.place.price * quantityCount}\$",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
@@ -378,7 +481,16 @@ class _BookingPageState extends State<BookingPage> {
             height: 20,
           ),
           MyButton(
-            onTap: () {},
+            onTap: () {
+              print('BookingPage.dart: ${widget.place.id}');
+              Booking booking = new Booking(
+                placeId: widget.place.id,
+                quantity: quantityCount,
+                checkInTime: dateController.text,
+                totalPrice: widget.place.price * quantityCount,
+              );
+              handleBooking(booking);
+            },
             title: "Book now",
           )
         ],

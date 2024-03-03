@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travelapp/component/custom-text-field.dart';
+import 'package:travelapp/model/AuthToken.dart';
+import 'package:travelapp/model/LoginStatus.dart';
 import 'package:travelapp/model/Response.dart';
 import 'package:travelapp/model/SelectedIndex.dart';
 import 'package:travelapp/pages/signuppage.dart';
@@ -16,11 +18,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool loginStatus = false;
   String errorMessage = "";
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Future<void> handleLogin(String username, String password) async {
+  Future<bool> handleLogin(String username, String password) async {
     final response = await http.post(
       Uri.parse('https://quydt.speak.vn/api/auth/login'),
       headers: <String, String>{
@@ -34,17 +35,19 @@ class _LoginPageState extends State<LoginPage> {
     var data = jsonDecode(response.body);
     Response dataResponse = Response.fromJson(data);
     if (dataResponse.status == 0) {
-      loginStatus = true;
       print(dataResponse.data);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("token","");
+      await prefs.remove("token");
       await prefs.setString(
           "token",
           dataResponse.data.containsKey('access_token')
               ? dataResponse.data['access_token']
               : '');
+
+      return true;
     } else {
       errorMessage = "Username or password is incorrect";
+      return false;
     }
     // throw Exception('Username or password is incorrect');
   }
@@ -53,13 +56,13 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loginStatus = false;
     errorMessage = "";
   }
 
   @override
   Widget build(BuildContext context) {
     final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
+    final _loginStatus = Provider.of<LoginStatus>(context, listen: true);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -156,6 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -165,10 +171,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           await handleLogin(usernameController.text.trimRight(),
-                              passwordController.text);
+                                  passwordController.text)
+                              .then((value) {
+                            Provider.of<AuthToken>(context)
+                                .setToken(prefs.getString("token")!);
+                            setState(() {
+                              _loginStatus.setLoginStatus(value);
+                            });
+                          });
                           //TODO: login
-                          if (loginStatus = true) {
+                          if (_loginStatus.isLoggedIn == true) {
                             Navigator.pop(context);
                             _selectedIndex.setIndex(0);
                           }

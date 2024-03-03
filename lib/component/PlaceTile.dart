@@ -9,6 +9,7 @@ class PlaceTile extends StatelessWidget {
     Key? key,
     required this.place,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     void navigateToPalaceDetail() {

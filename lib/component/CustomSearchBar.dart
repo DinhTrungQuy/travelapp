@@ -41,7 +41,7 @@ class _SearchBarState extends State<CustomSearchBar> {
           prefixIcon: const Icon(
             Icons.search,
           ),
-          hintText: 'Search for a product',
+          hintText: 'Search for a place',
           hintStyle: TextStyle(
             color: Colors.black,
           ),

@@ -1,12 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:travelapp/component/PlaceTile.dart';
 import 'package:travelapp/model/place.dart';
-import 'dart:convert';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String token;
+  
+  const HomePage({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomeState();
@@ -49,6 +57,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(
+                      top: 25,
                       left: 25,
                     ),
                     child: Column(

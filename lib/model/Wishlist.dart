@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart';
+class Wishlist {
+  String? id;
+  String? userId;
+  String? placeId;
 
-class Wishlist extends ChangeNotifier {
-  List<String> _wishlist = [];
+  Wishlist({this.id, this.userId, this.placeId});
 
-  List<String> get wishlist => _wishlist;
-
-  void add(String placeId) {
-    if (_wishlist.contains(placeId)) return;
-    _wishlist.add(placeId);
-    notifyListeners();
+  Wishlist.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['userId'];
+    placeId = json['placeId'];
+  }
+  static List<Wishlist> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => Wishlist.fromJson(json)).toList();
   }
 
-  void remove(String placeId) {
-    _wishlist.remove(placeId);
-    notifyListeners();
-  }
-
-  bool contains(String placeId) {
-    return _wishlist.contains(placeId);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['userId'] = this.userId;
+    data['placeId'] = this.placeId;
+    return data;
   }
 }
