@@ -76,20 +76,36 @@ class _MainPageState extends State<MainPage> {
   bool hasExpired = true;
   //TODO: set loading
 
+  Future<void> initializeAsyncData() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final prefs = await SharedPreferences.getInstance();
+      String token = Provider.of<AuthToken>(context, listen: false).token;
+      final _loginStatus = Provider.of<LoginStatus>(context, listen: false);
+
+      if (token != "") {
+        bool hasExpired = JwtDecoder.isExpired(token);
+        if (hasExpired) {
+          _loginStatus.setLoginStatus(false);
+          token = '';
+          await prefs.setString('token', '');
+          await prefs.setString('userId', '');
+          print('Token has expired');
+        } else {
+          Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+          await prefs.setString('userId', decodedToken['Id']);
+          _loginStatus.setLoginStatus(true);
+        }
+      } else {
+        _loginStatus.setLoginStatus(false);
+        print('No token found');
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      String token = Provider.of<AuthToken>(context, listen: false).token;
-      final _loginStatus = Provider.of<LoginStatus>(context, listen: false);
-      bool hasExpired = JwtDecoder.isExpired(token);
-      if (hasExpired) {
-        _loginStatus.setLoginStatus(false);
-        print('main.dart: expired token');
-      } else {
-        _loginStatus.setLoginStatus(true);
-      }
-    });
+    initializeAsyncData();
   }
 
   @override
@@ -98,7 +114,6 @@ class _MainPageState extends State<MainPage> {
     String token = Provider.of<AuthToken>(context).token;
 
     print('main.dart ${_loginStatus.isLoggedIn}');
-    print('main.dart ${token}');
 
     final List<Widget> _widgetOptions = [
       HomePage(token: token),
@@ -111,9 +126,6 @@ class _MainPageState extends State<MainPage> {
       ProfilePage(token: token),
     ];
     final _selectedIndex = Provider.of<SelectedIndex>(context);
-
-    // print('main.dart ${_loginStatus.isLoggedIn}');
-    // print('main.dart ${widget.token}');
 
     return loading
         ? CircularProgressIndicator()

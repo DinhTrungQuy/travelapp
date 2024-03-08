@@ -8,15 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:travelapp/component/WishlistTile.dart';
 import 'package:travelapp/model/Wishlist.dart';
-import 'package:travelapp/model/place.dart';
+import 'package:travelapp/model/Place.dart';
 
 class WishlistPage extends StatefulWidget {
   final String token;
-  
+
   const WishlistPage({
     Key? key,
     required this.token,
-   
   }) : super(key: key);
 
   @override

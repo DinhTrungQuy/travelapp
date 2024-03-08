@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelapp/component/mybutton.dart';
-import 'package:travelapp/model/place.dart';
+import 'package:travelapp/model/Place.dart';
 import 'package:travelapp/pages/BookingPage.dart';
 
 class AddToCartBar extends StatefulWidget {

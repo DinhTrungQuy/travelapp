@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:travelapp/component/TextBookingStatus.dart';
+import 'package:travelapp/component/mybutton.dart';
 
 import 'package:travelapp/model/Booking.dart';
 import 'package:travelapp/model/Place.dart';
@@ -56,7 +57,7 @@ class _BookingTileState extends State<BookingTile> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 7,
-                    offset: Offset(4, 8), // changes position of shadow
+                    offset: Offset(4, 8),
                   ),
                 ],
               ),
@@ -77,11 +78,7 @@ class _BookingTileState extends State<BookingTile> {
                     place!.name,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('On going',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green)),
+                  subtitle: TextBookingStatus(status: widget.booking.status!),
                   trailing: Text('Details', style: TextStyle(fontSize: 14)),
                   // collapsedBackgroundColor: Colors.red[400],
                   shape: RoundedRectangleBorder(
@@ -92,12 +89,26 @@ class _BookingTileState extends State<BookingTile> {
                   childrenPadding: EdgeInsets.all(15),
                   children: [
                     Text("Quantity: ${widget.booking.quantity}"),
+                    SizedBox(height: 5),
                     Text("Total Price: ${widget.booking.totalPrice}"),
+                    SizedBox(height: 5),
                     Text("Status: ${widget.booking.status}"),
+                    SizedBox(height: 5),
                     Text("Check Out Time: ${widget.booking.checkOutTime}"),
+                    SizedBox(height: 5),
                     Text("Created At: ${widget.booking.createdAt}"),
+                    SizedBox(height: 5),
                     Text("Updated At: ${widget.booking.updatedAt}"),
+                    SizedBox(height: 5),
                     Text("Rating: ${widget.booking.rating}"),
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      child: MyButton(
+                        title: "Checkin",
+                        onTap: () {},
+                      ),
+                    ),
                     SizedBox(height: 10),
                   ],
                 ),

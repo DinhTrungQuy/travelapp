@@ -38,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
         HttpHeaders.authorizationHeader: "Bearer " + widget.token,
       },
     );
-    print('ProfilePage.dart: ${widget.token}');
     if (response.statusCode != 200) {
       return User(username: '', password: '');
     }
@@ -80,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Image.network(
                                   user.imageUrl != ''
                                       ? user.imageUrl
-                                      : 'https://quydt.speak.vn/image/default-user.png',
+                                      : 'https://quydt.speak.vn/images/default-user.png',
                                   fit: BoxFit.cover,
                                   width: 70,
                                   height: 70,
@@ -102,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
                                 child: Image.network(
-                                  'https://quydt.speak.vn/image/default-user.png',
+                                  'https://quydt.speak.vn/images/default-user.png',
                                   fit: BoxFit.cover,
                                   width: 70,
                                   height: 70,

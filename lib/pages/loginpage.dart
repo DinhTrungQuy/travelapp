@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:travelapp/component/custom-text-field.dart';
 import 'package:travelapp/model/AuthToken.dart';
 import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/Response.dart';
 import 'package:travelapp/model/SelectedIndex.dart';
 import 'package:travelapp/pages/signuppage.dart';
 import 'package:http/http.dart' as http;
@@ -32,24 +31,19 @@ class _LoginPageState extends State<LoginPage> {
         'password': password,
       }),
     );
-    var data = jsonDecode(response.body);
-    Response dataResponse = Response.fromJson(data);
-    if (dataResponse.status == 0) {
-      print(dataResponse.data);
+
+    if (response.statusCode == 200) {
+      print(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove("token");
-      await prefs.setString(
-          "token",
-          dataResponse.data.containsKey('access_token')
-              ? dataResponse.data['access_token']
-              : '');
-
+      await prefs.setString("token", response.body);
       return true;
     } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("token", "");
       errorMessage = "Username or password is incorrect";
       return false;
     }
-    // throw Exception('Username or password is incorrect');
   }
 
   @override
@@ -176,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                           await handleLogin(usernameController.text.trimRight(),
                                   passwordController.text)
                               .then((value) {
-                            Provider.of<AuthToken>(context)
+                            Provider.of<AuthToken>(context, listen: false)
                                 .setToken(prefs.getString("token")!);
                             setState(() {
                               _loginStatus.setLoginStatus(value);

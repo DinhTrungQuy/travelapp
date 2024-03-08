@@ -8,7 +8,8 @@ import 'package:travelapp/component/CustomSearchBar.dart';
 import 'package:travelapp/component/PlaceCategoryTile.dart';
 import 'package:travelapp/component/PlaceTile.dart';
 import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/place.dart';
+import 'package:travelapp/model/Place.dart';
+
 import 'package:travelapp/pages/LoginPage.dart';
 
 class SearchPage extends StatefulWidget {
@@ -95,21 +96,21 @@ class _SearchPageState extends State<SearchPage> {
                           itemCount: searchResultTiles.length,
                           itemBuilder: (BuildContext context, int index) {
                             return PlaceTile(
-                              place: searchResultTiles[index],
+                                place: searchResultTiles[index] ,
                             );
                           })
                       : ListView(
                           padding: const EdgeInsets.all(0),
                           children: [
                             Text(
-                              'Shop by Category',
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              'Tours by region',
+                              style: TextStyle(fontSize: 18),
                             ),
                             const SizedBox(height: 16),
                             PlaceCategoryTile(
                               title: "Miền Bắc",
                               imageUrl:
-                                  "https://quydt.speak.vn/image/mien_bac.jpg",
+                                  "https://quydt.speak.vn/images/mien_bac.jpg",
                               place: places[0],
                               imageAlignment: Alignment.topCenter,
                             ),
@@ -117,7 +118,7 @@ class _SearchPageState extends State<SearchPage> {
                             PlaceCategoryTile(
                               title: "Miền Trung",
                               imageUrl:
-                                  "https://quydt.speak.vn/image/mien_trung.jpg",
+                                  "https://quydt.speak.vn/images/mien_trung.jpg",
                               place: places[1],
                               imageAlignment: Alignment.topCenter,
                             ),
@@ -125,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
                             PlaceCategoryTile(
                               title: "Miền Nam",
                               imageUrl:
-                                  "https://quydt.speak.vn/image/mien_nam.jpg",
+                                  "https://quydt.speak.vn/images/mien_nam.jpg",
                               place: places[2],
                             ),
                             SizedBox(height: 65),

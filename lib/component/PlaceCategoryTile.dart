@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/model/place.dart';
-import 'package:travelapp/pages/PlaceDetail.dart';
+import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/pages/CategoryPage.dart';
 
 class PlaceCategoryTile extends StatelessWidget {
   final String imageUrl;
@@ -36,12 +36,8 @@ class PlaceCategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _pushScreen(
-        context: context,
-        screen: PlaceDetail(
-          place: place,
-        ),
-      ),
+      onTap: () =>
+          _pushScreen(context: context, screen: CategoryPage(place: place)),
       child: Container(
         height: 200,
         decoration: BoxDecoration(

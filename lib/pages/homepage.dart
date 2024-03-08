@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:travelapp/component/PlaceTile.dart';
-import 'package:travelapp/model/place.dart';
+import 'package:travelapp/model/Place.dart';
 
 class HomePage extends StatefulWidget {
   final String token;

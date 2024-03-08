@@ -9,7 +9,7 @@ import 'package:travelapp/component/WishlistButton.dart';
 import 'package:travelapp/component/add-to-cart-bar.dart';
 import 'package:travelapp/component/back-button.dart';
 
-import 'package:travelapp/model/place.dart';
+import 'package:travelapp/model/Place.dart';
 
 class PlaceDetail extends StatefulWidget {
   final Place place;
@@ -37,12 +37,14 @@ class _PlaceDetailState extends State<PlaceDetail>
     String token = prefs.getString("token") ?? '';
     final response = await http.get(
       Uri.parse(
-          "https://quydt.speak.vn/api/wishlist?placeId=${placeId}"),
+          "https://quydt.speak.vn/api/wishlist/${placeId}"),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
+    print(response.body);
     if (response.statusCode == 200) {
+      print('true userId: $userId , placeId: $placeId');
       return true;
     } else {
       return false;
@@ -68,23 +70,17 @@ class _PlaceDetailState extends State<PlaceDetail>
   Future<void> handleDeleteWishlist(String userId, String placeId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? '';
-    final response = await http.delete(
+    await http.delete(
       Uri.parse(
-          "https://quydt.speak.vn/api/wishlist?userId=$userId&placeId=${placeId}"),
+          "https://quydt.speak.vn/api/wishlist/${placeId}"),
       headers: <String, String>{
         'Content-type': 'application/json; charset=utf-8',
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
-    if (response.statusCode == 200) {
-      print("Delete success");
-    } else {
-      print("Delete failed");
-      print('userId $userId , placeId $placeId');
-    }
   }
 
-  Future<void> initialize() async {
+  Future initialize() async {
     await getUserId();
     await getWishStatus(userId, widget.place.id).then((value) {
       setState(() {
