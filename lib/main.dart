@@ -94,6 +94,7 @@ class _MainPageState extends State<MainPage> {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
           await prefs.setString('userId', decodedToken['Id']);
           _loginStatus.setLoginStatus(true);
+          print("userId: " + decodedToken['Id']);
         }
       } else {
         _loginStatus.setLoginStatus(false);
@@ -112,7 +113,6 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final _loginStatus = Provider.of<LoginStatus>(context);
     String token = Provider.of<AuthToken>(context).token;
-
     print('main.dart ${_loginStatus.isLoggedIn}');
 
     final List<Widget> _widgetOptions = [

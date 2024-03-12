@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:travelapp/component/StatusButton.dart';
 import 'package:travelapp/component/TextBookingStatus.dart';
-import 'package:travelapp/component/mybutton.dart';
 
 import 'package:travelapp/model/Booking.dart';
 import 'package:travelapp/model/Place.dart';
@@ -44,7 +44,7 @@ class _BookingTileState extends State<BookingTile> {
         ? Center(child: CircularProgressIndicator())
         : Container(
             child: Container(
-              margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+              margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -54,10 +54,10 @@ class _BookingTileState extends State<BookingTile> {
                     bottomRight: Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withOpacity(0.4),
                     spreadRadius: 2,
-                    blurRadius: 7,
-                    offset: Offset(4, 8),
+                    blurRadius: 8,
+                    offset: Offset(2, 2),
                   ),
                 ],
               ),
@@ -77,6 +77,8 @@ class _BookingTileState extends State<BookingTile> {
                   title: Text(
                     place!.name,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: TextBookingStatus(status: widget.booking.status!),
                   trailing: Text('Details', style: TextStyle(fontSize: 14)),
@@ -88,7 +90,7 @@ class _BookingTileState extends State<BookingTile> {
                   expandedAlignment: Alignment.topLeft,
                   childrenPadding: EdgeInsets.all(15),
                   children: [
-                    Text("Quantity: ${widget.booking.quantity}"),
+                    Text("Passenger(s): ${widget.booking.quantity}"),
                     SizedBox(height: 5),
                     Text("Total Price: ${widget.booking.totalPrice}"),
                     SizedBox(height: 5),
@@ -104,9 +106,10 @@ class _BookingTileState extends State<BookingTile> {
                     SizedBox(height: 10),
                     Container(
                       width: double.infinity,
-                      child: MyButton(
-                        title: "Checkin",
-                        onTap: () {},
+                      child: StatusButton(
+                        place: place!,
+                        status: widget.booking.status!,
+                        bookingId: widget.booking.id!,
                       ),
                     ),
                     SizedBox(height: 10),

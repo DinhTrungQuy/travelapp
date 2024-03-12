@@ -32,18 +32,19 @@ class ProfileWidget extends StatelessWidget {
 
   Widget buildImage() {
     final image = imagePath == ''
-        ? NetworkImage('https://quydt.speak.vn/image/default-user.png')
-        : NetworkImage(imagePath);
-
+        ? 'https://quydt.speak.vn/images/default-user.png'
+        : imagePath;
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: NetworkImage(image),
           fit: BoxFit.cover,
           width: 128,
           height: 128,
-          child: InkWell(onTap: onClicked),
+          child: InkWell(
+            onTap: onClicked,
+          ),
         ),
       ),
     );

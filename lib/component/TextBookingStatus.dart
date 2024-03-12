@@ -30,6 +30,12 @@ class TextBookingStatus extends StatelessWidget {
       );
     } else if (status == 3) {
       return Text(
+        "Rated",
+        style: TextStyle(
+            color: Colors.amber[800], fontSize: 20, fontWeight: FontWeight.bold),
+      );
+    } else if (status == 4) {
+      return Text(
         "Cancelled",
         style: TextStyle(
             color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),

@@ -4,15 +4,17 @@ import 'package:travelapp/pages/CategoryPage.dart';
 
 class PlaceCategoryTile extends StatelessWidget {
   final String imageUrl;
-  final Place place;
+  final List<Place> places;
   final String title;
-  const PlaceCategoryTile(
-      {required this.place,
-      required this.imageUrl,
-      required this.title,
-      this.imageAlignment = Alignment.center,
-      Key? key})
-      : super(key: key);
+  final int direction;
+  const PlaceCategoryTile({
+    Key? key,
+    required this.direction,
+    required this.imageUrl,
+    required this.title,
+    required this.places,
+    this.imageAlignment = Alignment.center,
+  }) : super(key: key);
 
   /// Which part of the image to prefer
   final Alignment imageAlignment;
@@ -36,8 +38,12 @@ class PlaceCategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          _pushScreen(context: context, screen: CategoryPage(place: place)),
+      onTap: () => _pushScreen(
+          context: context,
+          screen: CategoryPage(
+            places: places,
+            direction: direction,
+          )),
       child: Container(
         height: 200,
         decoration: BoxDecoration(

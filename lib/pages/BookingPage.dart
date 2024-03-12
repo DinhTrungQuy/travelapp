@@ -95,6 +95,7 @@ class _BookingPageState extends State<BookingPage> {
             height: 30,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 width: 50,
@@ -111,21 +112,25 @@ class _BookingPageState extends State<BookingPage> {
               SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Place name",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Place name",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.place.name,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
+                    Text(
+                      widget.place.name,
+                      style: TextStyle(fontSize: 18),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -490,6 +495,8 @@ class _BookingPageState extends State<BookingPage> {
                 totalPrice: widget.place.price * quantityCount,
               );
               handleBooking(booking);
+              Navigator.pop(context);
+              Navigator.pop(context);
             },
             title: "Book now",
           )

@@ -10,7 +10,7 @@ import 'package:travelapp/model/Place.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
-  
+
   const HomePage({
     Key? key,
     required this.token,
@@ -58,7 +58,8 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                   child: Container(
                     padding: EdgeInsets.only(
                       top: 25,
-                      left: 25,
+                      left: 10,
+                      right: 10,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,10 +88,18 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                           child: TabBar(
                             tabAlignment: TabAlignment.start,
                             isScrollable: true,
-                            labelPadding: EdgeInsets.only(left: 0, right: 20),
+                            labelPadding: EdgeInsets.only(left: 25, right: 25),
                             controller: _tabController,
-                            labelColor: Colors.red[400],
-                            indicatorColor: Colors.red[400],
+                            labelColor: Colors.white,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.red[100]),
+                            splashBorderRadius: BorderRadius.circular(50),
+                            indicator: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(50), // Creates border
+                              color: Colors.red[400],
+                            ),
                             unselectedLabelColor: Colors.grey,
                             tabs: [
                               Text(

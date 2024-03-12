@@ -96,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
                           itemCount: searchResultTiles.length,
                           itemBuilder: (BuildContext context, int index) {
                             return PlaceTile(
-                                place: searchResultTiles[index] ,
+                              place: searchResultTiles[index],
                             );
                           })
                       : ListView(
@@ -108,26 +108,29 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                             const SizedBox(height: 16),
                             PlaceCategoryTile(
+                              direction: 0,
                               title: "Miền Bắc",
                               imageUrl:
                                   "https://quydt.speak.vn/images/mien_bac.jpg",
-                              place: places[0],
+                              places: places,
                               imageAlignment: Alignment.topCenter,
                             ),
                             SizedBox(height: 16),
                             PlaceCategoryTile(
+                              direction: 1,
                               title: "Miền Trung",
                               imageUrl:
                                   "https://quydt.speak.vn/images/mien_trung.jpg",
-                              place: places[1],
+                              places: places,
                               imageAlignment: Alignment.topCenter,
                             ),
                             SizedBox(height: 16),
                             PlaceCategoryTile(
+                              direction: 2,
                               title: "Miền Nam",
                               imageUrl:
                                   "https://quydt.speak.vn/images/mien_nam.jpg",
-                              place: places[2],
+                              places: places,
                             ),
                             SizedBox(height: 65),
                           ],

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelapp/component/BookingTile.dart';
 
 import 'package:travelapp/model/Booking.dart';
@@ -23,11 +24,14 @@ class _MyTourPageState extends State<MyTourPage> {
   bool loading = true;
   List<Booking> bookingList = [];
   Future<List<Booking>> getBookingList() async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString("token") ?? "";
     final response = await http
         .get(Uri.parse("https://quydt.speak.vn/api/booking"), headers: {
-      HttpHeaders.authorizationHeader: "Bearer ${widget.token}",
+      HttpHeaders.authorizationHeader: "Bearer ${token}",
     });
     print(response.statusCode);
+    print(widget.token);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
       return Booking.fromJsonList(data);
@@ -53,14 +57,26 @@ class _MyTourPageState extends State<MyTourPage> {
       appBar: AppBar(
         title: Text('My Tour'),
         centerTitle: true,
+        scrolledUnderElevation: 0,
       ),
       body: loading
           ? Center(child: CircularProgressIndicator())
-          : Center(
-              child: ListView.builder(
-                itemCount: bookingList.length,
-                itemBuilder: (context, index) =>
-                    BookingTile(booking: bookingList[index]),
+          : RefreshIndicator(
+              onRefresh: () async {
+                getBookingList().then((value) {
+                  setState(() {
+                    bookingList = value;
+                  });
+                });
+              },
+              child: Center(
+                child: Container(
+                  child: ListView.builder(
+                    itemCount: bookingList.length,
+                    itemBuilder: (context, index) =>
+                        BookingTile(booking: bookingList[index]),
+                  ),
+                ),
               ),
             ),
     );

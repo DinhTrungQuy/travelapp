@@ -45,20 +45,20 @@ class _WishlistTileState extends State<WishlistTile> {
                     child: Image.network(
                       widget.place.imageUrl,
                       // width: 100,
-                      height: size.width * 0.5 - 20,
+                      height: size.width * 0.5 - 25,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Positioned(
                     child: Container(
-                      height: size.width * 0.5 - 20,
+                      height: size.width * 0.5 - 25,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            Colors.black.withOpacity(0.6),
+                            Colors.black.withOpacity(0.7),
                           ],
                         ),
                       ),
@@ -79,24 +79,35 @@ class _WishlistTileState extends State<WishlistTile> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text(
-                              widget.place.name,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                            Container(
+                              width: size.width * 0.5 - 70,
+                              child: Text(
+                                widget.place.name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        RatingBarIndicator(
-                          rating: double.parse(widget.place.rating),
-                          itemBuilder: (context, index) => Icon(
-                            Icons.star,
-                            color: Colors.yellow,
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          child: RatingBarIndicator(
+                            rating: double.parse(widget.place.rating),
+                            itemBuilder: (context, index) => Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                            ),
+                            itemCount: 5,
+                            itemSize: 16,
+                            // direction: Axis.vertical,
                           ),
-                          itemCount: 5,
-                          itemSize: 20,
-                          // direction: Axis.vertical,
                         ),
                       ],
                     ),

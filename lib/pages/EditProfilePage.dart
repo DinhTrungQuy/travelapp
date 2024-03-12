@@ -24,12 +24,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
+        title: Text("Edit Profile"),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [],
+        centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(

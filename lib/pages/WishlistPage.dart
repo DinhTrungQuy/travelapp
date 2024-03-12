@@ -89,18 +89,27 @@ class _WishlistPageState extends State<WishlistPage> {
       ),
       body: loading
           ? Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: EdgeInsets.all(10),
-              itemCount: places.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0),
-              itemBuilder: (context, index) {
-                return WishlistTile(
-                  place: places[index],
-                );
+          : RefreshIndicator(
+              onRefresh: () async {
+                getWishlist().then((value) {
+                  getAllPlaces(value).then((value) => setState(() {
+                        places = value;
+                      }));
+                });
               },
+              child: GridView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: places.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0),
+                itemBuilder: (context, index) {
+                  return WishlistTile(
+                    place: places[index],
+                  );
+                },
+              ),
             ),
     );
   }

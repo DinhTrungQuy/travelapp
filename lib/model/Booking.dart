@@ -55,6 +55,9 @@ class Booking {
   }
 
   static List<Booking> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((json) => Booking.fromJson(json)).toList();
+    List<Booking> sortedList =
+        jsonList.map((json) => Booking.fromJson(json)).toList();
+    sortedList.sort((a, b) => a.status!.compareTo(b.status!));
+    return sortedList;
   }
 }
