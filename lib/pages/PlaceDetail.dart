@@ -36,13 +36,12 @@ class _PlaceDetailState extends State<PlaceDetail>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? '';
     final response = await http.get(
-      Uri.parse(
-          "https://quydt.speak.vn/api/wishlist/${placeId}"),
+      Uri.parse("https://quydt.speak.vn/api/wishlist/${placeId}"),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
-    print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       print('true userId: $userId , placeId: $placeId');
       return true;
@@ -71,8 +70,7 @@ class _PlaceDetailState extends State<PlaceDetail>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? '';
     await http.delete(
-      Uri.parse(
-          "https://quydt.speak.vn/api/wishlist/${placeId}"),
+      Uri.parse("https://quydt.speak.vn/api/wishlist/${placeId}"),
       headers: <String, String>{
         'Content-type': 'application/json; charset=utf-8',
         HttpHeaders.authorizationHeader: "Bearer $token"
@@ -96,7 +94,7 @@ class _PlaceDetailState extends State<PlaceDetail>
     super.initState();
     initialize();
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -122,10 +120,24 @@ class _PlaceDetailState extends State<PlaceDetail>
                   child: WishlistButton(
                     isWishlisted: isWishlisted,
                     onTapToList: () async {
-                      await handleAddWishlist(userId, widget.place.id);
-                      setState(() {
-                        isWishlisted = true;
-                      });
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      if (prefs.getString('token') == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "You need to login first.",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            backgroundColor: Colors.red[400],
+                          ),
+                        );
+                      } else {
+                        await handleAddWishlist(userId, widget.place.id);
+                        setState(() {
+                          isWishlisted = true;
+                        });
+                      }
                       //TODO: async Bookmark
                     },
                     onTapToRemove: () async {
@@ -255,10 +267,10 @@ class _PlaceDetailState extends State<PlaceDetail>
                                   icon: Icon(Icons.photo),
                                   text: 'Photos',
                                 ),
-                                Tab(
-                                  icon: Icon(Icons.map),
-                                  text: 'Map',
-                                ),
+                                // Tab(
+                                //   icon: Icon(Icons.map),
+                                //   text: 'Map',
+                                // ),
                               ],
                             ),
                             SizedBox(height: 20),
@@ -318,20 +330,20 @@ class _PlaceDetailState extends State<PlaceDetail>
                                         ),
                                       ],
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Map',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                      ],
-                                    ),
+                                    // Column(
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.start,
+                                    //   children: [
+                                    //     Text(
+                                    //       'Map',
+                                    //       style: const TextStyle(
+                                    //         fontSize: 20,
+                                    //         fontWeight: FontWeight.bold,
+                                    //       ),
+                                    //     ),
+                                    //     const SizedBox(height: 10),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               ),

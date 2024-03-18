@@ -144,19 +144,19 @@ class _MainPageState extends State<MainPage> {
               ),
               centerTitle: true,
               actions: [
-                Container(
-                  margin: EdgeInsets.only(right: 15),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NoficationPage()));
-                    },
-                    child: Icon(Icons.notifications_none_outlined,
-                        color: Colors.white),
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(right: 15),
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => NoficationPage()));
+                //     },
+                //     child: Icon(Icons.notifications_none_outlined,
+                //         color: Colors.white),
+                //   ),
+                // ),
               ],
             ),
             body: Stack(
@@ -168,6 +168,7 @@ class _MainPageState extends State<MainPage> {
                     horizontal: 15,
                     vertical: 20,
                   ),
+                  decoration: BoxDecoration(color: Colors.transparent),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(44),
                     child: GNav(

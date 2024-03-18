@@ -16,7 +16,7 @@ import 'package:travelapp/pages/MyTourPage.dart';
 
 class ProfilePage extends StatefulWidget {
   final String token;
-  
+
   const ProfilePage({
     Key? key,
     required this.token,
@@ -43,6 +43,13 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     User userData = User.fromJson(jsonDecode(response.body));
     return userData;
+  }
+
+  Future<void> logout() async {
+    await http
+        .post(Uri.parse('https://quydt.speak.vn/api/auth/logout'), headers: {
+      HttpHeaders.authorizationHeader: "Bearer " + widget.token,
+    });
   }
 
   @override
@@ -151,12 +158,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListTile(
                         title: const Text('My Tour'),
                         leading: const Icon(Icons.card_travel_outlined),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyTourPage(token: widget.token)));
+                        onTap: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          if (prefs.getString('token') == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "You need to login first.",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                backgroundColor: Colors.red[400],
+                              ),
+                            );
+                          } else
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyTourPage(token: widget.token)));
                         },
                       ),
                     ),
@@ -168,13 +188,26 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListTile(
                         title: const Text('My Profile'),
                         leading: const Icon(Icons.person_outline),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfilePage(
-                                        user: user,
-                                      )));
+                        onTap: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          if (prefs.getString('token') == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "You need to login first.",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                backgroundColor: Colors.red[400],
+                              ),
+                            );
+                          } else
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(
+                                          user: user,
+                                        )));
                         },
                       ),
                     ),
@@ -248,6 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: const Text('Logout'),
                               leading: const Icon(Icons.logout),
                               onTap: () async {
+                                await logout();
                                 print(_loginStatus.isLoggedIn);
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();

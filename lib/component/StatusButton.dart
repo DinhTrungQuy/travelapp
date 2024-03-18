@@ -1,10 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rating_dialog/rating_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:travelapp/model/Place.dart';
 
 class StatusButton extends StatefulWidget {
@@ -93,6 +95,7 @@ class _StatusButtonState extends State<StatusButton> {
     Future<void> handleRating(int ratingValue, String comment) async {
       final prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token") ?? "";
+      String userId = prefs.getString("userId") ?? "";
       final response = await http.post(
           Uri.parse('https://quydt.speak.vn/api/Rating/${widget.bookingId}'),
           headers: {
@@ -100,7 +103,7 @@ class _StatusButtonState extends State<StatusButton> {
             "Content-Type": "application/json",
           },
           body: jsonEncode(<String, dynamic>{
-            "userId": prefs.getString("userId"),
+            "userId": userId,
             "placeId": widget.place.id,
             "ratingValue": ratingValue.toString(),
             "comment": comment,
@@ -135,8 +138,11 @@ class _StatusButtonState extends State<StatusButton> {
 
       onCancelled: () => print('cancelled'),
       onSubmitted: (response) async {
+        final prefs = await SharedPreferences.getInstance();
+        String userId = prefs.getString("userId") ?? "";
         await handleRating(response.rating.round(), response.comment);
         print('rating: ${response.rating}, comment: ${response.comment}');
+        print('user ${userId}');
       },
     );
 

@@ -59,7 +59,6 @@ class _AddToCartBarState extends State<AddToCartBar> {
             onTap: () async {
               final SharedPreferences prefs =
                   await SharedPreferences.getInstance();
-
               if (prefs.getString('token') == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
