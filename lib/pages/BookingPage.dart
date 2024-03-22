@@ -495,8 +495,25 @@ class _BookingPageState extends State<BookingPage> {
                 totalPrice: widget.place.price * quantityCount,
               );
               handleBooking(booking);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Booking Complete'),
+                  content: const Text('Your booking has been completed!'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+              // Navigator.pop(context);
+              // Navigator.pop(context);
             },
             title: "Book now",
           )

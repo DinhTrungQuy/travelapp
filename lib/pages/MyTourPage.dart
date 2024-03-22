@@ -39,6 +39,14 @@ class _MyTourPageState extends State<MyTourPage> {
     return [];
   }
 
+  void refreshBookings() {
+    getBookingList().then((value) {
+      setState(() {
+        bookingList = value;
+      });
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -73,8 +81,9 @@ class _MyTourPageState extends State<MyTourPage> {
                 child: Container(
                   child: ListView.builder(
                     itemCount: bookingList.length,
-                    itemBuilder: (context, index) =>
-                        BookingTile(booking: bookingList[index]),
+                    itemBuilder: (context, index) => BookingTile(
+                        booking: bookingList[index],
+                        onStatusChanged: refreshBookings),
                   ),
                 ),
               ),

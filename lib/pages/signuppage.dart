@@ -15,16 +15,13 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   TextEditingController usernameController = TextEditingController();
-
   TextEditingController fullnameController = TextEditingController();
-
   TextEditingController phoneController = TextEditingController();
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
+  String errorMessage = "";
 
-  void handleSignUp(User user) async {
+  Future<bool> handleSignUp(User user) async {
     final response =
         await http.post(Uri.parse("https://quydt.speak.vn/api/auth/register"),
             headers: <String, String>{
@@ -40,11 +37,23 @@ class _SignUpPageState extends State<SignUpPage> {
             }));
     if (response.statusCode == 200) {
       print("Sign up success");
+      return true;
     } else {
       print("Sign up failed");
+      setState(() {
+        errorMessage = "Sign up failed. Please try again.";
+      });
     }
+    return false;
     // Response<User> dataResponse = Response.fromJson(data);
     // print(dataResponse.data);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    errorMessage = "";
   }
 
   @override
@@ -138,13 +147,22 @@ class _SignUpPageState extends State<SignUpPage> {
                             label: 'Password',
                             isSecret: true,
                           ),
+                          Text(
+                            errorMessage,
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           SizedBox(
                               height: 50,
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red[400],
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     User user = User(
                                       username: usernameController.text,
                                       fullname: fullnameController.text,
@@ -154,8 +172,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                       imageUrl: '',
                                     );
                                     //TODO: create account
-                                    handleSignUp(user);
-                                    Navigator.of(context).pop();
+                                    bool success = await handleSignUp(user);
+                                    if (success) {
+                                      Navigator.of(context).pop();
+                                    }
                                   },
                                   child: const Text(
                                     'Create account',

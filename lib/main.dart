@@ -10,7 +10,6 @@ import 'package:travelapp/model/SelectedIndex.dart';
 import 'package:travelapp/model/Wishlisted.dart';
 import 'package:travelapp/model/cart.dart';
 import 'package:travelapp/pages/HomePage.dart';
-import 'package:travelapp/pages/NoficationPage.dart';
 import 'package:travelapp/pages/ProfilePage.dart';
 import 'package:travelapp/pages/WishlistPage.dart';
 import 'package:travelapp/pages/searchpage.dart';

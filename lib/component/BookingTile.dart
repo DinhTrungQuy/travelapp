@@ -10,9 +10,11 @@ import 'package:http/http.dart' as http;
 
 class BookingTile extends StatefulWidget {
   final Booking booking;
+  final Function onStatusChanged;
   const BookingTile({
     Key? key,
     required this.booking,
+    required this.onStatusChanged,
   }) : super(key: key);
 
   @override
@@ -28,6 +30,7 @@ Future<Place> getPlaceById(String placeId) async {
 class _BookingTileState extends State<BookingTile> {
   Place? place;
   bool loading = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -41,7 +44,7 @@ class _BookingTileState extends State<BookingTile> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Center(child: CircularProgressIndicator())
+        ? SizedBox.shrink()
         : Container(
             child: Container(
               margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
@@ -110,6 +113,7 @@ class _BookingTileState extends State<BookingTile> {
                         place: place!,
                         status: widget.booking.status!,
                         bookingId: widget.booking.id!,
+                        onStatusChanged: widget.onStatusChanged,
                       ),
                     ),
                     SizedBox(height: 10),

@@ -13,11 +13,13 @@ class StatusButton extends StatefulWidget {
   final Place place;
   final int status;
   final String bookingId;
+  final Function onStatusChanged;
   const StatusButton({
     Key? key,
     required this.place,
     required this.status,
     required this.bookingId,
+    required this.onStatusChanged,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _StatusButtonState extends State<StatusButton> {
         Uri.parse(
             'https://quydt.speak.vn/api/booking/cancel/${widget.bookingId}'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
+    widget.onStatusChanged();
   }
 
   Future<void> handleCheckin() async {
@@ -43,6 +46,7 @@ class _StatusButtonState extends State<StatusButton> {
         Uri.parse(
             'https://quydt.speak.vn/api/booking/checkin/${widget.bookingId}'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
+    widget.onStatusChanged();
   }
 
   Future<void> handleCheckout() async {
@@ -53,6 +57,7 @@ class _StatusButtonState extends State<StatusButton> {
         Uri.parse(
             'https://quydt.speak.vn/api/booking/checkout/${widget.bookingId}'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
+    widget.onStatusChanged();
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
@@ -110,6 +115,7 @@ class _StatusButtonState extends State<StatusButton> {
           }));
       print(response.statusCode);
       print(response.body);
+      widget.onStatusChanged();
     }
 
     final _dialog = RatingDialog(
