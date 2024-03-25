@@ -276,76 +276,74 @@ class _PlaceDetailState extends State<PlaceDetail>
                             const SizedBox(height: 20),
                             SizedBox(
                               height: size.height * 0.3,
-                              child: Expanded(
-                                child: TabBarView(
-                                  controller: _tabController,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Description',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Description',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        widget.place.description,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Photos',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Image.network(
+                                            widget.place.imageUrl,
+                                            height: 100,
+                                            fit: BoxFit.cover,
                                           ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          widget.place.description,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
+                                          const SizedBox(width: 10),
+                                          Image.network(
+                                            widget.place.imageUrl,
+                                            height: 100,
+                                            fit: BoxFit.cover,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Photos',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: [
-                                            Image.network(
-                                              widget.place.imageUrl,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Image.network(
-                                              widget.place.imageUrl,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    // Column(
-                                    //   crossAxisAlignment:
-                                    //       CrossAxisAlignment.start,
-                                    //   children: [
-                                    //     Text(
-                                    //       'Map',
-                                    //       style: const TextStyle(
-                                    //         fontSize: 20,
-                                    //         fontWeight: FontWeight.bold,
-                                    //       ),
-                                    //     ),
-                                    //     const SizedBox(height: 10),
-                                    //   ],
-                                    // ),
-                                  ],
-                                ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  // Column(
+                                  //   crossAxisAlignment:
+                                  //       CrossAxisAlignment.start,
+                                  //   children: [
+                                  //     Text(
+                                  //       'Map',
+                                  //       style: const TextStyle(
+                                  //         fontSize: 20,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //     const SizedBox(height: 10),
+                                  //   ],
+                                  // ),
+                                ],
                               ),
                             ),
                           ],

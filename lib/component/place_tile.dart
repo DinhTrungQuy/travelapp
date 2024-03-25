@@ -27,7 +27,7 @@ class PlaceTile extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         child: GestureDetector(
           onTap: navigateToPalaceDetail,
           child: Row(
@@ -128,6 +128,7 @@ class PlaceTile extends StatelessWidget {
                   ],
                 ),
               ),
+
             ],
           ),
         ),

@@ -15,18 +15,16 @@ class AddToCartBar extends StatefulWidget {
 class _AddToCartBarState extends State<AddToCartBar> {
   AlertDialog alert = AlertDialog(
     title: const Text("AlertDialog"),
-    content:
-        const Text("Would you like to continue learning how to use Flutter alerts?"),
+    content: const Text(
+        "Would you like to continue learning how to use Flutter alerts?"),
     actions: [
       TextButton(
         child: const Text("Yes"),
-        onPressed: () {
-        },
+        onPressed: () {},
       ),
       TextButton(
         child: const Text("No"),
-        onPressed: () {
-        },
+        onPressed: () {},
       ),
     ],
   );
@@ -68,12 +66,13 @@ class _AddToCartBarState extends State<AddToCartBar> {
                   ),
                 );
               } else {
-                //TODO: Add to cart function
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            BookingPage(place: widget.place)));
+                if (context.mounted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BookingPage(place: widget.place)));
+                }
               }
               print('Book now Button');
             },

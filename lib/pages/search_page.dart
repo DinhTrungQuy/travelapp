@@ -32,13 +32,11 @@ class _SearchPageState extends State<SearchPage> {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Place>((json) => Place.fromJson(json)).toList();
   }
-
   Future<List<Place>> fetchPlaces() async {
     var response =
         await http.get(Uri.parse('https://quydt.speak.vn/api/place'));
     return parsePlaces(response.body);
   }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -48,7 +46,6 @@ class _SearchPageState extends State<SearchPage> {
           loading = false;
         }));
   }
-
   void setSearchString(String value) => setState(() {
         searchString = value;
       });
@@ -64,7 +61,6 @@ class _SearchPageState extends State<SearchPage> {
 
     return str;
   }
-
   @override
   Widget build(BuildContext context) {
     final loginStatus = Provider.of<LoginStatus>(context);

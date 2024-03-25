@@ -28,7 +28,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool loading = true;
-  
 
   User user = User(username: '', password: '');
 
@@ -145,7 +144,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const LoginPage()));
+                                          builder: (context) =>
+                                              const LoginPage()));
                                 },
                                 child: const Text('Login'),
                               ),
@@ -294,7 +294,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const LoginPage()));
+                                        builder: (context) =>
+                                            const LoginPage()));
                                 setState(() {
                                   loginStatus.setLoginStatus(false);
                                   print('rerendering');

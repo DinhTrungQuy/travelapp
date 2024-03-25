@@ -213,51 +213,47 @@ class _StatusButtonState extends State<StatusButton> {
         ],
       );
     } else if (widget.status == 1) {
-      return Expanded(
-        child: GestureDetector(
-          onTap: handleCheckout,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(5),
+      return GestureDetector(
+        onTap: handleCheckout,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: const Text(
+            "Checkout",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-            child: const Text(
-              "Checkout",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            textAlign: TextAlign.center,
           ),
         ),
       );
     } else if (widget.status == 2) {
-      return Expanded(
-        child: GestureDetector(
-          onTap: () {
-            showDialog(
-              context: context,
-              barrierDismissible:
-                  true, // set to false if you want to force a rating
-              builder: (context) => dialog,
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.amber[300],
-              borderRadius: BorderRadius.circular(5),
+      return GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            barrierDismissible:
+                true, // set to false if you want to force a rating
+            builder: (context) => dialog,
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.amber[300],
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: const Text(
+            "Rate this",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-            child: const Text(
-              "Rate this",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            textAlign: TextAlign.center,
           ),
         ),
       );

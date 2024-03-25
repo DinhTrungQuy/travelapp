@@ -73,7 +73,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   bool loading = false;
   bool hasExpired = true;
-  //TODO: set loading
 
   Future<void> initializeAsyncData() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -85,8 +84,8 @@ class _MainPageState extends State<MainPage> {
         if (hasExpired) {
           loginStatus.setLoginStatus(false);
           token = '';
-          await prefs.setString('token', '');
-          await prefs.setString('userId', '');
+          prefs.setString('token', '');
+          prefs.setString('userId', '');
           print('Token has expired');
         } else {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
@@ -112,6 +111,7 @@ class _MainPageState extends State<MainPage> {
     final loginStatus = Provider.of<LoginStatus>(context);
     String token = Provider.of<AuthToken>(context).token;
     print('main.dart ${loginStatus.isLoggedIn}');
+    print('main.dart $token');
 
     final List<Widget> widgetOptions = [
       HomePage(token: token),
