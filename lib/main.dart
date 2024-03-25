@@ -3,16 +3,16 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/model/AuthToken.dart';
+import 'package:travelapp/model/auth_token.dart';
 
-import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/SelectedIndex.dart';
-import 'package:travelapp/model/Wishlisted.dart';
+import 'package:travelapp/model/login_status.dart';
+import 'package:travelapp/model/selected_index.dart';
+import 'package:travelapp/model/wishlisted.dart';
 import 'package:travelapp/model/cart.dart';
-import 'package:travelapp/pages/HomePage.dart';
-import 'package:travelapp/pages/ProfilePage.dart';
-import 'package:travelapp/pages/WishlistPage.dart';
-import 'package:travelapp/pages/searchpage.dart';
+import 'package:travelapp/pages/home_page.dart';
+import 'package:travelapp/pages/profile_page.dart';
+import 'package:travelapp/pages/wishlist_page.dart';
+import 'package:travelapp/pages/search_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,9 +53,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: MainPage(),
+        home: const MainPage(),
         debugShowCheckedModeBanner: false,
-        routes: {},
+        routes: const {},
       ),
     );
   }
@@ -79,12 +79,11 @@ class _MainPageState extends State<MainPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final prefs = await SharedPreferences.getInstance();
       String token = Provider.of<AuthToken>(context, listen: false).token;
-      final _loginStatus = Provider.of<LoginStatus>(context, listen: false);
-
+      final loginStatus = Provider.of<LoginStatus>(context, listen: false);
       if (token != "") {
         bool hasExpired = JwtDecoder.isExpired(token);
         if (hasExpired) {
-          _loginStatus.setLoginStatus(false);
+          loginStatus.setLoginStatus(false);
           token = '';
           await prefs.setString('token', '');
           await prefs.setString('userId', '');
@@ -92,11 +91,11 @@ class _MainPageState extends State<MainPage> {
         } else {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
           await prefs.setString('userId', decodedToken['Id']);
-          _loginStatus.setLoginStatus(true);
+          loginStatus.setLoginStatus(true);
           print("userId: " + decodedToken['Id']);
         }
       } else {
-        _loginStatus.setLoginStatus(false);
+        loginStatus.setLoginStatus(false);
         print('No token found');
       }
     });
@@ -110,30 +109,30 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _loginStatus = Provider.of<LoginStatus>(context);
+    final loginStatus = Provider.of<LoginStatus>(context);
     String token = Provider.of<AuthToken>(context).token;
-    print('main.dart ${_loginStatus.isLoggedIn}');
+    print('main.dart ${loginStatus.isLoggedIn}');
 
-    final List<Widget> _widgetOptions = [
+    final List<Widget> widgetOptions = [
       HomePage(token: token),
       Container(
-        padding: EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: SearchPage(token: token),
       ),
       Container(
-          padding: EdgeInsets.only(top: 20), child: WishlistPage(token: token)),
+          padding: const EdgeInsets.only(top: 20), child: WishlistPage(token: token)),
       ProfilePage(token: token),
     ];
-    final _selectedIndex = Provider.of<SelectedIndex>(context);
+    final selectedIndex = Provider.of<SelectedIndex>(context);
 
     return loading
-        ? CircularProgressIndicator()
+        ? const CircularProgressIndicator()
         : Scaffold(
             appBar: AppBar(
               foregroundColor: Colors.white,
               backgroundColor: Colors.red[400],
               scrolledUnderElevation: 0,
-              title: Text(
+              title: const Text(
                 'Travel App',
                 style: TextStyle(
                   fontSize: 20,
@@ -142,7 +141,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               centerTitle: true,
-              actions: [
+              actions: const [
                 // Container(
                 //   margin: EdgeInsets.only(right: 15),
                 //   child: GestureDetector(
@@ -161,13 +160,13 @@ class _MainPageState extends State<MainPage> {
             body: Stack(
               alignment: AlignmentDirectional.bottomEnd,
               children: [
-                _widgetOptions.elementAt(_selectedIndex.index),
+                widgetOptions.elementAt(selectedIndex.index),
                 Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 20,
                   ),
-                  decoration: BoxDecoration(color: Colors.transparent),
+                  decoration: const BoxDecoration(color: Colors.transparent),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(44),
                     child: GNav(
@@ -175,13 +174,13 @@ class _MainPageState extends State<MainPage> {
                       color: Colors.white,
                       activeColor: Colors.white,
                       tabBackgroundColor: Colors.red.shade600,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       gap: 8,
-                      selectedIndex: _selectedIndex.index,
+                      selectedIndex: selectedIndex.index,
                       onTabChange: (index) {
-                        _selectedIndex.setIndex(index);
+                        selectedIndex.setIndex(index);
                       },
-                      tabs: [
+                      tabs: const [
                         GButton(
                           icon: Icons.home_outlined,
                           text: 'Home',

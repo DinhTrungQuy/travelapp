@@ -16,7 +16,7 @@ class WishlistButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return isWishlisted
         ? Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(1),
               borderRadius: BorderRadius.circular(100),
@@ -30,7 +30,7 @@ class WishlistButton extends StatelessWidget {
             ),
           )
         : Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(1),
               borderRadius: BorderRadius.circular(100),

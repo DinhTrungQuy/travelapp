@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:travelapp/component/WishlistTile.dart';
-import 'package:travelapp/model/Wishlist.dart';
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/component/wishlist_tile.dart';
+import 'package:travelapp/model/wishlist.dart';
+import 'package:travelapp/model/place.dart';
 
 class WishlistPage extends StatefulWidget {
   final String token;
@@ -32,7 +32,7 @@ class _WishlistPageState extends State<WishlistPage> {
     final response = await http.get(
       Uri.parse('https://quydt.speak.vn/api/wishlist'),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + token,
+        HttpHeaders.authorizationHeader: "Bearer $token",
       },
     );
     if (response.statusCode != 200) {
@@ -55,9 +55,9 @@ class _WishlistPageState extends State<WishlistPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? "";
     final response = await http.get(
-      Uri.parse('https://quydt.speak.vn/api/place/${placeId}'),
+      Uri.parse('https://quydt.speak.vn/api/place/$placeId'),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + token,
+        HttpHeaders.authorizationHeader: "Bearer $token",
       },
     );
     if (response.statusCode != 200) {
@@ -88,7 +88,7 @@ class _WishlistPageState extends State<WishlistPage> {
         scrolledUnderElevation: 0,
       ),
       body: loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: () async {
                 getWishlist().then((value) {
@@ -98,9 +98,9 @@ class _WishlistPageState extends State<WishlistPage> {
                 });
               },
               child: GridView.builder(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 itemCount: places.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10.0,
                     mainAxisSpacing: 10.0),

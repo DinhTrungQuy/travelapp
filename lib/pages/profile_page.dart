@@ -7,12 +7,12 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/SelectedIndex.dart';
-import 'package:travelapp/model/User.dart';
-import 'package:travelapp/pages/EditProfilePage.dart';
-import 'package:travelapp/pages/LoginPage.dart';
-import 'package:travelapp/pages/MyTourPage.dart';
+import 'package:travelapp/model/login_status.dart';
+import 'package:travelapp/model/selected_index.dart';
+import 'package:travelapp/model/user.dart';
+import 'package:travelapp/pages/edit_profile_page.dart';
+import 'package:travelapp/pages/login_page.dart';
+import 'package:travelapp/pages/my_tour_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final String token;
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final response = await http.get(
       Uri.parse('https://quydt.speak.vn/api/user'),
       headers: {
-        HttpHeaders.authorizationHeader: "Bearer " + widget.token,
+        HttpHeaders.authorizationHeader: "Bearer ${widget.token}",
       },
     );
     if (response.statusCode != 200) {
@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> logout() async {
     await http
         .post(Uri.parse('https://quydt.speak.vn/api/auth/logout'), headers: {
-      HttpHeaders.authorizationHeader: "Bearer " + widget.token,
+      HttpHeaders.authorizationHeader: "Bearer ${widget.token}",
     });
   }
 
@@ -65,25 +65,28 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
-    final _loginStatus = Provider.of<LoginStatus>(context, listen: true);
-    print('ProfilePage.dart: ${_loginStatus.isLoggedIn}');
+    final selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
+    final loginStatus = Provider.of<LoginStatus>(context, listen: true);
+    print('ProfilePage.dart: ${loginStatus.isLoggedIn}');
     print('ProfilePage.dart: ${widget.token}');
     return Scaffold(
       body: loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView(
               children: [
                 Container(
                   height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.red[400],
+                  ),
                   child: Center(
-                    child: _loginStatus.isLoggedIn
+                    child: loginStatus.isLoggedIn
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ClipRRect(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(70)),
+                                    const BorderRadius.all(Radius.circular(70)),
                                 child: Image.network(
                                   user.imageUrl != ''
                                       ? user.imageUrl
@@ -93,10 +96,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   height: 70,
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Text(
                                 'Hi ${user.fullname.toUpperCase()}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -115,21 +118,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                   height: 70,
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               const Text(
                                 'Guest',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               const Text(
                                 'Login to see your profile',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
@@ -142,15 +145,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginPage()));
+                                          builder: (context) => const LoginPage()));
                                 },
                                 child: const Text('Login'),
                               ),
                             ],
                           ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.red[400],
                   ),
                 ),
                 Row(
@@ -165,19 +165,20 @@ class _ProfilePageState extends State<ProfilePage> {
                           if (prefs.getString('token') == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
+                                content: const Text(
                                   "You need to login first.",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 backgroundColor: Colors.red[400],
                               ),
                             );
-                          } else
+                          } else {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         MyTourPage(token: widget.token)));
+                          }
                         },
                       ),
                     ),
@@ -195,20 +196,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           if (prefs.getString('token') == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(
+                                content: const Text(
                                   "You need to login first.",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 backgroundColor: Colors.red[400],
                               ),
                             );
-                          } else
+                          } else {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EditProfilePage(
                                           user: user,
                                         )));
+                          }
                         },
                       ),
                     ),
@@ -221,16 +223,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: const Text('My Wishlist'),
                         leading: const Icon(Icons.favorite_border),
                         onTap: () {
-                          _selectedIndex.setIndex(2);
+                          selectedIndex.setIndex(2);
                         },
                       ),
                     ),
                   ],
                 ),
-                Row(
+                const Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         "Help and support for your travel",
                         style: TextStyle(
@@ -274,7 +276,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                _loginStatus.isLoggedIn
+                loginStatus.isLoggedIn
                     ? Row(
                         children: [
                           Expanded(
@@ -283,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               leading: const Icon(Icons.logout),
                               onTap: () async {
                                 await logout();
-                                print(_loginStatus.isLoggedIn);
+                                print(loginStatus.isLoggedIn);
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.remove("token");
@@ -292,19 +294,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginPage()));
+                                        builder: (context) => const LoginPage()));
                                 setState(() {
-                                  _loginStatus.setLoginStatus(false);
+                                  loginStatus.setLoginStatus(false);
                                   print('rerendering');
                                 });
-                                print(_loginStatus.isLoggedIn);
+                                print(loginStatus.isLoggedIn);
                               },
                             ),
                           ),
                         ],
                       )
-                    : SizedBox(height: 30),
-                SizedBox(height: 70),
+                    : const SizedBox(height: 30),
+                const SizedBox(height: 70),
               ],
             ),
     );

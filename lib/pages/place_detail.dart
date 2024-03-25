@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/component/WishlistButton.dart';
-import 'package:travelapp/component/add-to-cart-bar.dart';
-import 'package:travelapp/component/back-button.dart';
+import 'package:travelapp/component/wishlist_button.dart';
+import 'package:travelapp/component/add_to_cart_bar.dart';
+import 'package:travelapp/component/back_button.dart';
 
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/model/place.dart';
 
 class PlaceDetail extends StatefulWidget {
   final Place place;
@@ -36,7 +36,7 @@ class _PlaceDetailState extends State<PlaceDetail>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? '';
     final response = await http.get(
-      Uri.parse("https://quydt.speak.vn/api/wishlist/${placeId}"),
+      Uri.parse("https://quydt.speak.vn/api/wishlist/$placeId"),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
@@ -70,7 +70,7 @@ class _PlaceDetailState extends State<PlaceDetail>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? '';
     await http.delete(
-      Uri.parse("https://quydt.speak.vn/api/wishlist/${placeId}"),
+      Uri.parse("https://quydt.speak.vn/api/wishlist/$placeId"),
       headers: <String, String>{
         'Content-type': 'application/json; charset=utf-8',
         HttpHeaders.authorizationHeader: "Bearer $token"
@@ -107,7 +107,7 @@ class _PlaceDetailState extends State<PlaceDetail>
               surfaceTintColor: Colors.transparent,
               leadingWidth: 71,
               leading: Container(
-                margin: EdgeInsets.only(left: 15),
+                margin: const EdgeInsets.only(left: 15),
                 child: BackArrowButton(
                   onTap: () {
                     Navigator.pop(context);
@@ -125,7 +125,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                       if (prefs.getString('token') == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
+                            content: const Text(
                               "You need to login first.",
                               style: TextStyle(fontSize: 18),
                             ),
@@ -153,7 +153,7 @@ class _PlaceDetailState extends State<PlaceDetail>
             ),
       extendBodyBehindAppBar: true,
       body: loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 Stack(
@@ -192,9 +192,9 @@ class _PlaceDetailState extends State<PlaceDetail>
                       right: 0,
                       bottom: 0,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius: const BorderRadius.vertical(
+                          borderRadius: BorderRadius.vertical(
                             top: Radius.circular(35),
                           ),
                         ),
@@ -202,7 +202,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Text(
                               widget.place.name,
                               style: const TextStyle(
@@ -228,13 +228,13 @@ class _PlaceDetailState extends State<PlaceDetail>
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   widget.place.rating,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
@@ -258,7 +258,7 @@ class _PlaceDetailState extends State<PlaceDetail>
                               labelColor: Colors.red[400],
                               unselectedLabelColor: Colors.grey,
                               indicatorColor: Colors.red[400],
-                              tabs: [
+                              tabs: const [
                                 Tab(
                                   icon: Icon(Icons.info_outline),
                                   text: 'About',
@@ -273,8 +273,8 @@ class _PlaceDetailState extends State<PlaceDetail>
                                 // ),
                               ],
                             ),
-                            SizedBox(height: 20),
-                            Container(
+                            const SizedBox(height: 20),
+                            SizedBox(
                               height: size.height * 0.3,
                               child: Expanded(
                                 child: TabBarView(
@@ -284,9 +284,9 @@ class _PlaceDetailState extends State<PlaceDetail>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Description',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -305,9 +305,9 @@ class _PlaceDetailState extends State<PlaceDetail>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Photos',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),

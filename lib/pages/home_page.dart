@@ -5,8 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:travelapp/component/PlaceTile.dart';
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/component/place_tile.dart';
+import 'package:travelapp/model/place.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -49,14 +49,14 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header(),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 25,
                       left: 10,
                       right: 10,
@@ -64,14 +64,14 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Du lịch Việt Nam',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
@@ -81,14 +81,14 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                             color: Colors.grey[800],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Container(
                           child: TabBar(
                             tabAlignment: TabAlignment.start,
                             isScrollable: true,
-                            labelPadding: EdgeInsets.only(left: 25, right: 25),
+                            labelPadding: const EdgeInsets.only(left: 25, right: 25),
                             controller: _tabController,
                             labelColor: Colors.white,
                             indicatorSize: TabBarIndicatorSize.tab,
@@ -101,7 +101,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                               color: Colors.red[400],
                             ),
                             unselectedLabelColor: Colors.grey,
-                            tabs: [
+                            tabs: const [
                               Text(
                                 'All',
                                 style: TextStyle(
@@ -123,17 +123,17 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Expanded(
                           child: TabBarView(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             controller: _tabController,
                             dragStartBehavior: DragStartBehavior.down,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(bottom: 70),
+                                margin: const EdgeInsets.only(bottom: 70),
                                 child: ListView.builder(
                                     itemCount: places.length,
                                     itemBuilder: (context, index) {
@@ -141,7 +141,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                                     }),
                               ),
                               Container(
-                                margin: EdgeInsets.only(bottom: 70),
+                                margin: const EdgeInsets.only(bottom: 70),
                                 child: ListView.builder(
                                     itemCount: places.length,
                                     itemBuilder: (context, index) {
@@ -153,7 +153,7 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                                     }),
                               ),
                               Container(
-                                margin: EdgeInsets.only(bottom: 70),
+                                margin: const EdgeInsets.only(bottom: 70),
                                 child: ListView.builder(
                                     itemCount: places.length,
                                     itemBuilder: (context, index) {

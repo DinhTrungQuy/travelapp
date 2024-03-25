@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/component/mybutton.dart';
-import 'package:travelapp/model/Place.dart';
-import 'package:travelapp/pages/BookingPage.dart';
+import 'package:travelapp/component/my_button.dart';
+import 'package:travelapp/model/place.dart';
+import 'package:travelapp/pages/booking_page.dart';
 
 class AddToCartBar extends StatefulWidget {
   final Place place;
@@ -14,20 +14,18 @@ class AddToCartBar extends StatefulWidget {
 
 class _AddToCartBarState extends State<AddToCartBar> {
   AlertDialog alert = AlertDialog(
-    title: Text("AlertDialog"),
+    title: const Text("AlertDialog"),
     content:
-        Text("Would you like to continue learning how to use Flutter alerts?"),
+        const Text("Would you like to continue learning how to use Flutter alerts?"),
     actions: [
       TextButton(
-        child: Text("Yes"),
+        child: const Text("Yes"),
         onPressed: () {
-          print("You choose Yes");
         },
       ),
       TextButton(
-        child: Text("No"),
+        child: const Text("No"),
         onPressed: () {
-          print("You choose No");
         },
       ),
     ],
@@ -35,22 +33,22 @@ class _AddToCartBarState extends State<AddToCartBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 5,
           ),
         ],
       ),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Total: ${widget.place.price} \$',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -62,20 +60,21 @@ class _AddToCartBarState extends State<AddToCartBar> {
               if (prefs.getString('token') == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
+                    content: const Text(
                       "You need to login first.",
                       style: TextStyle(fontSize: 18),
                     ),
                     backgroundColor: Colors.red[400],
                   ),
                 );
-              } else
+              } else {
                 //TODO: Add to cart function
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
                             BookingPage(place: widget.place)));
+              }
               print('Book now Button');
             },
             title: 'Book now',

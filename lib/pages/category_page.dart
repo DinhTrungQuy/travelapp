@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:travelapp/component/PlaceTile.dart';
+import 'package:travelapp/component/place_tile.dart';
 
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/model/place.dart';
 
 class CategoryPage extends StatefulWidget {
   final List<Place> places;
@@ -49,7 +49,7 @@ class _CategoryPageState extends State<CategoryPage> {
         centerTitle: true,
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(18),
+        padding: const EdgeInsets.all(18),
         itemCount: _list.length,
         // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         //     crossAxisCount: 2, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),

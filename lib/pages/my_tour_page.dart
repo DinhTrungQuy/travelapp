@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/component/BookingTile.dart';
+import 'package:travelapp/component/booking_tile.dart';
 
-import 'package:travelapp/model/Booking.dart';
+import 'package:travelapp/model/booking.dart';
 import 'package:http/http.dart' as http;
 
 class MyTourPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _MyTourPageState extends State<MyTourPage> {
     String token = prefs.getString("token") ?? "";
     final response = await http
         .get(Uri.parse("https://quydt.speak.vn/api/booking"), headers: {
-      HttpHeaders.authorizationHeader: "Bearer ${token}",
+      HttpHeaders.authorizationHeader: "Bearer $token",
     });
     print(response.statusCode);
     print(widget.token);
@@ -63,12 +63,12 @@ class _MyTourPageState extends State<MyTourPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Tour'),
+        title: const Text('My Tour'),
         centerTitle: true,
         scrolledUnderElevation: 0,
       ),
       body: loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: () async {
                 getBookingList().then((value) {

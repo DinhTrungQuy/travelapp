@@ -11,19 +11,19 @@ class TextBookingStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (status == 0) {
-      return Text(
+      return const Text(
         "Pending",
         style: TextStyle(
             color: Colors.blue, fontSize: 20, fontWeight: FontWeight.bold),
       );
     } else if (status == 1) {
-      return Text(
+      return const Text(
         "On going",
         style: TextStyle(
             color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
       );
     } else if (status == 2) {
-      return Text(
+      return const Text(
         "Finished",
         style: TextStyle(
             color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
@@ -35,13 +35,13 @@ class TextBookingStatus extends StatelessWidget {
             color: Colors.amber[800], fontSize: 20, fontWeight: FontWeight.bold),
       );
     } else if (status == 4) {
-      return Text(
+      return const Text(
         "Cancelled",
         style: TextStyle(
             color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
       );
     }
-    return Text(
+    return const Text(
       "Error",
       style: TextStyle(
           color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),

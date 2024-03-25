@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:travelapp/component/ProfileComponent.dart';
-import 'package:travelapp/component/TextFieldComponent.dart';
-import 'package:travelapp/model/User.dart';
+import 'package:travelapp/component/profile_component.dart';
+import 'package:travelapp/component/text_field_component.dart';
+import 'package:travelapp/model/user.dart';
 
 class EditProfilePage extends StatefulWidget {
   final User user;
@@ -23,16 +23,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
-        title: Text("Edit Profile"),
+        leading: const BackButton(),
+        title: const Text("Edit Profile"),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [],
+        actions: const [],
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-        physics: BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+        physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
             imagePath: widget.user.imageUrl,

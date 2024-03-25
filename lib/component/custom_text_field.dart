@@ -10,7 +10,7 @@ class CustomTextField extends StatefulWidget {
   final String text = '';
   final TextEditingController controller;
 
-  CustomTextField({
+  const CustomTextField({
     Key? key,
     required this.icon,
     required this.label,

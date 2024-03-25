@@ -7,7 +7,7 @@ class BackArrowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(50),

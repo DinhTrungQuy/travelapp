@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:travelapp/component/back-button.dart';
-import 'package:travelapp/component/custom-text-field.dart';
+import 'package:travelapp/component/back_button.dart';
+import 'package:travelapp/component/custom_text_field.dart';
 import 'package:http/http.dart' as http;
 import 'package:travelapp/model/user.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({super.key});
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -70,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Column(children: [
                 const Expanded(
                   child: Center(
-                    child: const Text.rich(
+                    child: Text.rich(
                       TextSpan(
                         style: TextStyle(
                           fontSize: 40,
@@ -117,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           CustomTextField(
@@ -149,11 +149,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           Text(
                             errorMessage,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.red,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           SizedBox(

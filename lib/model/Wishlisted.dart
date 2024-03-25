@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Wishlist extends ChangeNotifier {
-  List<String> _wishlist = [];
+  final List<String> _wishlist = [];
 
   List<String> get wishlist => _wishlist;
 

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travelapp/component/custom-text-field.dart';
-import 'package:travelapp/model/AuthToken.dart';
-import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/SelectedIndex.dart';
-import 'package:travelapp/pages/signuppage.dart';
+import 'package:travelapp/component/custom_text_field.dart';
+import 'package:travelapp/model/auth_token.dart';
+import 'package:travelapp/model/login_status.dart';
+import 'package:travelapp/model/selected_index.dart';
+import 'package:travelapp/pages/sign_up_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
-    final _loginStatus = Provider.of<LoginStatus>(context, listen: true);
+    final selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
+    final loginStatus = Provider.of<LoginStatus>(context, listen: true);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
@@ -80,11 +80,11 @@ class _LoginPageState extends State<LoginPage> {
           width: size.width,
           child: Column(
             children: [
-              Expanded(
+              const Expanded(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text.rich(
+                  Text.rich(
                     TextSpan(
                       style: TextStyle(
                         fontSize: 40,
@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CustomTextField(
@@ -148,11 +148,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Text(
                       errorMessage,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.red,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SizedBox(
@@ -173,16 +173,16 @@ class _LoginPageState extends State<LoginPage> {
                             Provider.of<AuthToken>(context, listen: false)
                                 .setToken(prefs.getString("token")!);
                             setState(() {
-                              _loginStatus.setLoginStatus(value);
+                              loginStatus.setLoginStatus(value);
                             });
                           });
                           //TODO: login
-                          if (_loginStatus.isLoggedIn == true) {
+                          if (loginStatus.isLoggedIn == true) {
                             Navigator.pop(context);
-                            _selectedIndex.setIndex(0);
+                            selectedIndex.setIndex(0);
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           'Sign in',
                           style: TextStyle(
                               fontFamily: 'OpenSans',
@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) {
-                              return SignUpPage();
+                              return const SignUpPage();
                             }),
                           );
                         },

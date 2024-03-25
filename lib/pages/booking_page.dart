@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:travelapp/component/mybutton.dart';
-import 'package:travelapp/model/Booking.dart';
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/component/my_button.dart';
+import 'package:travelapp/model/booking.dart';
+import 'package:travelapp/model/place.dart';
 import 'package:http/http.dart' as http;
 
 class BookingPage extends StatefulWidget {
@@ -77,21 +77,21 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking'),
+        title: const Text('Booking'),
         centerTitle: true,
         scrolledUnderElevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text(
+          const Text(
             "Booking details",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -104,19 +104,19 @@ class _BookingPageState extends State<BookingPage> {
                   color: Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.location_on,
                   color: Colors.red,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Place name",
                       style: TextStyle(
                         fontSize: 16,
@@ -125,7 +125,7 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                     Text(
                       widget.place.name,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -134,7 +134,7 @@ class _BookingPageState extends State<BookingPage> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -143,7 +143,7 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -155,19 +155,19 @@ class _BookingPageState extends State<BookingPage> {
                   color: Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.calendar_today,
                   color: Colors.red,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Check-in",
                       style: TextStyle(
                         fontSize: 16,
@@ -193,7 +193,7 @@ class _BookingPageState extends State<BookingPage> {
                           });
                         }
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Select date',
                         suffixIcon: Icon(Icons.arrow_drop_down),
                         // contentPadding: EdgeInsets.all(0),
@@ -206,7 +206,7 @@ class _BookingPageState extends State<BookingPage> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -215,7 +215,7 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -227,18 +227,18 @@ class _BookingPageState extends State<BookingPage> {
                   color: Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.calendar_today,
                   color: Colors.red,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Check-out",
                     style: TextStyle(
                       fontSize: 16,
@@ -247,13 +247,13 @@ class _BookingPageState extends State<BookingPage> {
                   ),
                   Text(
                     checkOutTime,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -262,7 +262,7 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -274,18 +274,18 @@ class _BookingPageState extends State<BookingPage> {
                   color: Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.calendar_today,
                   color: Colors.red,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Duration",
                     style: TextStyle(
                       fontSize: 16,
@@ -294,13 +294,13 @@ class _BookingPageState extends State<BookingPage> {
                   ),
                   Text(
                     "${widget.place.durationDays} days",
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -309,7 +309,7 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -321,18 +321,18 @@ class _BookingPageState extends State<BookingPage> {
                   color: Colors.red.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.people,
                   color: Colors.red,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Passenger(s)",
                     style: TextStyle(
                       fontSize: 16,
@@ -343,15 +343,15 @@ class _BookingPageState extends State<BookingPage> {
                     children: [
                       IconButton(
                         onPressed: decrementQuantity,
-                        icon: Icon(Icons.remove),
+                        icon: const Icon(Icons.remove),
                       ),
                       Text(
                         quantityCount.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       IconButton(
                         onPressed: incrementQuantity,
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                       ),
                     ],
                   ),
@@ -359,10 +359,10 @@ class _BookingPageState extends State<BookingPage> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text("Payment Summary",
+          const Text("Payment Summary",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -375,14 +375,14 @@ class _BookingPageState extends State<BookingPage> {
                 children: [
                   Text(
                     widget.place.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                     ),
                   ),
                   Text(
                     "${quantityCount}x${widget.place.price}\$  ",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
@@ -391,14 +391,14 @@ class _BookingPageState extends State<BookingPage> {
               ),
               Text(
                 "${widget.place.price * quantityCount}\$",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -407,13 +407,13 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Subtotal",
                 style: TextStyle(
                   fontSize: 16,
@@ -423,15 +423,15 @@ class _BookingPageState extends State<BookingPage> {
               ),
               Text(
                 "${widget.place.price * quantityCount}\$",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
-          Row(
+          const SizedBox(height: 20),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -450,7 +450,7 @@ class _BookingPageState extends State<BookingPage> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -459,13 +459,13 @@ class _BookingPageState extends State<BookingPage> {
               color: Colors.grey.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Total",
                 style: TextStyle(
                   fontSize: 18,
@@ -475,20 +475,20 @@ class _BookingPageState extends State<BookingPage> {
               ),
               Text(
                 "${widget.place.price * quantityCount}\$",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           MyButton(
             onTap: () {
               print('BookingPage.dart: ${widget.place.id}');
-              Booking booking = new Booking(
+              Booking booking = Booking(
                 placeId: widget.place.id,
                 quantity: quantityCount,
                 checkInTime: dateController.text,

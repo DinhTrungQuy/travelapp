@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/model/Place.dart';
-import 'package:travelapp/pages/CategoryPage.dart';
+import 'package:travelapp/model/place.dart';
+import 'package:travelapp/pages/category_page.dart';
 
 class PlaceCategoryTile extends StatelessWidget {
   final String imageUrl;

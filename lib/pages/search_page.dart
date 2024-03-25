@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'package:travelapp/component/CustomSearchBar.dart';
-import 'package:travelapp/component/PlaceCategoryTile.dart';
-import 'package:travelapp/component/PlaceTile.dart';
-import 'package:travelapp/model/LoginStatus.dart';
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/component/custom_search_bar.dart';
+import 'package:travelapp/component/place_category_tile.dart';
+import 'package:travelapp/component/place_tile.dart';
+import 'package:travelapp/model/login_status.dart';
+import 'package:travelapp/model/place.dart';
 
-import 'package:travelapp/pages/LoginPage.dart';
+import 'package:travelapp/pages/login_page.dart';
 
 class SearchPage extends StatefulWidget {
   final String token;
@@ -67,7 +67,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _loginStatus = Provider.of<LoginStatus>(context);
+    final loginStatus = Provider.of<LoginStatus>(context);
     List<Place> searchResultTiles = [];
     if (searchString.isNotEmpty) {
       searchResultTiles = places
@@ -84,11 +84,11 @@ class _SearchPageState extends State<SearchPage> {
           onChanged: setSearchString,
         ),
         scrolledUnderElevation: 0,
-        actions: [],
+        actions: const [],
       ),
       body: loading
-          ? Center(child: CircularProgressIndicator())
-          : _loginStatus.isLoggedIn
+          ? const Center(child: CircularProgressIndicator())
+          : loginStatus.isLoggedIn
               ? Container(
                   margin: const EdgeInsets.all(16),
                   child: searchString.isNotEmpty
@@ -102,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                       : ListView(
                           padding: const EdgeInsets.all(0),
                           children: [
-                            Text(
+                            const Text(
                               'Tours by region',
                               style: TextStyle(fontSize: 18),
                             ),
@@ -115,7 +115,7 @@ class _SearchPageState extends State<SearchPage> {
                               places: places,
                               imageAlignment: Alignment.topCenter,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             PlaceCategoryTile(
                               direction: 1,
                               title: "Miền Trung",
@@ -124,7 +124,7 @@ class _SearchPageState extends State<SearchPage> {
                               places: places,
                               imageAlignment: Alignment.topCenter,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             PlaceCategoryTile(
                               direction: 2,
                               title: "Miền Nam",
@@ -132,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
                                   "https://quydt.speak.vn/images/mien_nam.jpg",
                               places: places,
                             ),
-                            SizedBox(height: 65),
+                            const SizedBox(height: 65),
                           ],
                         ),
                 )
@@ -140,8 +140,8 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('You need to login first.'),
-                    SizedBox(height: 10),
+                    const Text('You need to login first.'),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -154,7 +154,7 @@ class _SearchPageState extends State<SearchPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()));
+                                builder: (context) => const LoginPage()));
                       },
                       child: const Text('Login'),
                     ),

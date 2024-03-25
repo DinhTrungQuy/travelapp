@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:rating_dialog/rating_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:travelapp/model/Place.dart';
+import 'package:travelapp/model/place.dart';
 
 class StatusButton extends StatefulWidget {
   final Place place;
@@ -84,8 +84,8 @@ class _StatusButtonState extends State<StatusButton> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('OK'),
-              onPressed: () async {
-                await handleCancel();
+              onPressed: () {
+                handleCancel();
                 Navigator.of(context).pop();
               },
             ),
@@ -118,22 +118,22 @@ class _StatusButtonState extends State<StatusButton> {
       widget.onStatusChanged();
     }
 
-    final _dialog = RatingDialog(
+    final dialog = RatingDialog(
       initialRating: 1.0,
       // your app's name?
-      title: Text(
+      title: const Text(
         'Rating Your Tour',
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
         ),
       ),
       // encourage your user to leave a high rating?
-      message: Text(
+      message: const Text(
         'Tap a star to set your rating.',
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 15),
+        style: TextStyle(fontSize: 15),
       ),
       // your app's logo?
       image: Image.network(
@@ -148,7 +148,7 @@ class _StatusButtonState extends State<StatusButton> {
         String userId = prefs.getString("userId") ?? "";
         await handleRating(response.rating.round(), response.comment);
         print('rating: ${response.rating}, comment: ${response.comment}');
-        print('user ${userId}');
+        print('user $userId');
       },
     );
 
@@ -165,14 +165,14 @@ class _StatusButtonState extends State<StatusButton> {
                 handleCancel();
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: GestureDetector(
                   onTap: () => _dialogBuilder(context),
-                  child: Text(
+                  child: const Text(
                     "Cancel",
                     style: TextStyle(
                       color: Colors.white,
@@ -184,7 +184,7 @@ class _StatusButtonState extends State<StatusButton> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Expanded(
@@ -194,12 +194,12 @@ class _StatusButtonState extends State<StatusButton> {
                 setState(() {});
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Text(
+                child: const Text(
                   "Checkin",
                   style: TextStyle(
                     color: Colors.white,
@@ -217,12 +217,12 @@ class _StatusButtonState extends State<StatusButton> {
         child: GestureDetector(
           onTap: handleCheckout,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(5),
             ),
-            child: Text(
+            child: const Text(
               "Checkout",
               style: TextStyle(
                 color: Colors.white,
@@ -241,16 +241,16 @@ class _StatusButtonState extends State<StatusButton> {
               context: context,
               barrierDismissible:
                   true, // set to false if you want to force a rating
-              builder: (context) => _dialog,
+              builder: (context) => dialog,
             );
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.amber[300],
               borderRadius: BorderRadius.circular(5),
             ),
-            child: Text(
+            child: const Text(
               "Rate this",
               style: TextStyle(
                 color: Colors.black,
@@ -262,6 +262,6 @@ class _StatusButtonState extends State<StatusButton> {
         ),
       );
     }
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }

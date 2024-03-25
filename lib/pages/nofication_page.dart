@@ -12,10 +12,10 @@ class _NoficationPageState extends State<NoficationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nofication'),
+        title: const Text('Nofication'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text('Nofication Page'),
       ),
     );

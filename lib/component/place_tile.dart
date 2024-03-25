@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:travelapp/model/Place.dart';
-import 'package:travelapp/pages/PlaceDetail.dart';
+import 'package:travelapp/model/place.dart';
+import 'package:travelapp/pages/place_detail.dart';
 
 class PlaceTile extends StatelessWidget {
   final Place place;
@@ -27,7 +27,7 @@ class PlaceTile extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         child: GestureDetector(
           onTap: navigateToPalaceDetail,
           child: Row(
@@ -43,7 +43,7 @@ class PlaceTile extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Expanded(
@@ -51,57 +51,53 @@ class PlaceTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
                       place.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Container(
-                      child: Text(
-                        place.description,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[800],
+                    Text(
+                      place.description,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[800],
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.red[400],
                         ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Colors.red[400],
-                          ),
-                          Expanded(
-                            child: Text(
-                              place.location,
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                        Expanded(
+                          child: Text(
+                            place.location,
+                            style: const TextStyle(
+                              color: Colors.grey,
                             ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
@@ -112,18 +108,18 @@ class PlaceTile extends StatelessWidget {
                         ),
                         Text(
                           place.rating,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       'From ${place.price} \$',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
