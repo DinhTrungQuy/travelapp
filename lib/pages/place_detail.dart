@@ -41,9 +41,7 @@ class _PlaceDetailState extends State<PlaceDetail>
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
-    print(response.statusCode);
     if (response.statusCode == 200) {
-      print('true userId: $userId , placeId: $placeId');
       return true;
     } else {
       return false;
@@ -90,7 +88,6 @@ class _PlaceDetailState extends State<PlaceDetail>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initialize();
 
@@ -122,7 +119,8 @@ class _PlaceDetailState extends State<PlaceDetail>
                     onTapToList: () async {
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      if (prefs.getString('token') == null) {
+                      if (prefs.getString('token') == null ||
+                          prefs.getString('token') == "") {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: const Text(
@@ -138,7 +136,6 @@ class _PlaceDetailState extends State<PlaceDetail>
                           isWishlisted = true;
                         });
                       }
-                      //TODO: async Bookmark
                     },
                     onTapToRemove: () async {
                       await handleDeleteWishlist(userId, widget.place.id);

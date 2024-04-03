@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class StatusButton extends StatefulWidget {
 
 class _StatusButtonState extends State<StatusButton> {
   Future<void> handleCancel() async {
-    print('cancel');
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? "";
     await http.post(
@@ -39,7 +37,6 @@ class _StatusButtonState extends State<StatusButton> {
   }
 
   Future<void> handleCheckin() async {
-    print('cancel');
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? "";
     await http.post(
@@ -50,7 +47,6 @@ class _StatusButtonState extends State<StatusButton> {
   }
 
   Future<void> handleCheckout() async {
-    print('cancel');
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token") ?? "";
     await http.post(
@@ -98,23 +94,6 @@ class _StatusButtonState extends State<StatusButton> {
   @override
   Widget build(BuildContext context) {
     Future<void> handleRating(int ratingValue, String comment) async {
-      final prefs = await SharedPreferences.getInstance();
-      String token = prefs.getString("token") ?? "";
-      String userId = prefs.getString("userId") ?? "";
-      final response = await http.post(
-          Uri.parse('https://quydt.speak.vn/api/Rating/${widget.bookingId}'),
-          headers: {
-            HttpHeaders.authorizationHeader: 'Bearer $token',
-            "Content-Type": "application/json",
-          },
-          body: jsonEncode(<String, dynamic>{
-            "userId": userId,
-            "placeId": widget.place.id,
-            "ratingValue": ratingValue.toString(),
-            "comment": comment,
-          }));
-      print(response.statusCode);
-      print(response.body);
       widget.onStatusChanged();
     }
 
@@ -141,17 +120,11 @@ class _StatusButtonState extends State<StatusButton> {
         fit: BoxFit.cover,
       ),
       submitButtonText: 'Submit',
-
-      onCancelled: () => print('cancelled'),
+      onCancelled: () => {},
       onSubmitted: (response) async {
-        final prefs = await SharedPreferences.getInstance();
-        String userId = prefs.getString("userId") ?? "";
         await handleRating(response.rating.round(), response.comment);
-        print('rating: ${response.rating}, comment: ${response.comment}');
-        print('user $userId');
       },
     );
-
     if (widget.status == 0) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

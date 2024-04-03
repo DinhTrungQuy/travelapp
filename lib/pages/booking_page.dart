@@ -39,7 +39,6 @@ class _BookingPageState extends State<BookingPage> {
   Future<void> handleBooking(Booking booking) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token') ?? '';
-    print('BookingPage.dart placeId: ${booking.placeId}');
     await http.post(Uri.parse('https://quydt.speak.vn/api/booking'),
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +64,6 @@ class _BookingPageState extends State<BookingPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -487,7 +485,6 @@ class _BookingPageState extends State<BookingPage> {
           ),
           MyButton(
             onTap: () {
-              print('BookingPage.dart: ${widget.place.id}');
               Booking booking = Booking(
                 placeId: widget.place.id,
                 quantity: quantityCount,

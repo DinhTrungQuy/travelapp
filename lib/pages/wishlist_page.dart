@@ -70,7 +70,6 @@ class _WishlistPageState extends State<WishlistPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getWishlist().then((value) {
       getAllPlaces(value).then((value) => setState(() {

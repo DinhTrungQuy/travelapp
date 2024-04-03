@@ -30,8 +30,6 @@ class _MyTourPageState extends State<MyTourPage> {
         .get(Uri.parse("https://quydt.speak.vn/api/booking"), headers: {
       HttpHeaders.authorizationHeader: "Bearer $token",
     });
-    print(response.statusCode);
-    print(widget.token);
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
       return Booking.fromJsonList(data);
@@ -49,7 +47,6 @@ class _MyTourPageState extends State<MyTourPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getBookingList().then((value) {
       setState(() {
@@ -78,13 +75,11 @@ class _MyTourPageState extends State<MyTourPage> {
                 });
               },
               child: Center(
-                child: Container(
-                  child: ListView.builder(
-                    itemCount: bookingList.length,
-                    itemBuilder: (context, index) => BookingTile(
-                        booking: bookingList[index],
-                        onStatusChanged: refreshBookings),
-                  ),
+                child: ListView.builder(
+                  itemCount: bookingList.length,
+                  itemBuilder: (context, index) => BookingTile(
+                      booking: bookingList[index],
+                      onStatusChanged: refreshBookings),
                 ),
               ),
             ),

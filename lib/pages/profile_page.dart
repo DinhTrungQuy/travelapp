@@ -54,7 +54,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUser().then((value) => setState(() {
           user = value;
@@ -66,8 +65,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final selectedIndex = Provider.of<SelectedIndex>(context, listen: true);
     final loginStatus = Provider.of<LoginStatus>(context, listen: true);
-    print('ProfilePage.dart: ${loginStatus.isLoggedIn}');
-    print('ProfilePage.dart: ${widget.token}');
     return Scaffold(
       body: loading
           ? const Center(child: CircularProgressIndicator())
@@ -162,7 +159,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () async {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          if (prefs.getString('token') == null) {
+                          if (prefs.getString('token') == null ||
+                              prefs.getString('token') == '') {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text(
@@ -193,7 +191,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () async {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          if (prefs.getString('token') == null) {
+                          if (prefs.getString('token') == null ||
+                              prefs.getString('token') == '') {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text(
@@ -243,24 +242,38 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ListTile(
-                        title: const Text('Settings'),
-                        leading: const Icon(Icons.settings_outlined),
-                        onTap: () {},
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: ListTile(
+                //         title: const Text('Settings'),
+                //         leading: const Icon(Icons.settings_outlined),
+                //         onTap: () {},
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Row(
                   children: [
                     Expanded(
                       child: ListTile(
                         title: const Text('About Us'),
                         leading: const Icon(Icons.info_outline),
-                        onTap: () {},
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text(
+                                "Author: Lecy",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              backgroundColor: Colors.cyan[400],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -271,7 +284,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListTile(
                         title: const Text('Contact Us'),
                         leading: const Icon(Icons.contact_support_outlined),
-                        onTap: () {},
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text(
+                                "Speak.vn",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              backgroundColor: Colors.cyan[400],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -285,7 +312,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               leading: const Icon(Icons.logout),
                               onTap: () async {
                                 await logout();
-                                print(loginStatus.isLoggedIn);
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.remove("token");
@@ -298,9 +324,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             const LoginPage()));
                                 setState(() {
                                   loginStatus.setLoginStatus(false);
-                                  print('rerendering');
                                 });
-                                print(loginStatus.isLoggedIn);
                               },
                             ),
                           ),

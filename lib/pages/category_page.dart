@@ -34,7 +34,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _list = widget.places
         .where((element) => element.direction == widget.direction)

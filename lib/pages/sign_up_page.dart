@@ -36,10 +36,8 @@ class _SignUpPageState extends State<SignUpPage> {
               "role": user.role,
             }));
     if (response.statusCode == 200) {
-      print("Sign up success");
       return true;
     } else {
-      print("Sign up failed");
       setState(() {
         errorMessage = "Sign up failed. Please try again.";
       });
@@ -51,7 +49,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     errorMessage = "";
   }
@@ -171,7 +168,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                       password: passwordController.text,
                                       imageUrl: '',
                                     );
-                                    //TODO: create account
                                     bool success = await handleSignUp(user);
                                     if (success) {
                                       Navigator.of(context).pop();

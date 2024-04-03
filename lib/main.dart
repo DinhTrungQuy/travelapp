@@ -86,16 +86,13 @@ class _MainPageState extends State<MainPage> {
           token = '';
           prefs.setString('token', '');
           prefs.setString('userId', '');
-          print('Token has expired');
         } else {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
           await prefs.setString('userId', decodedToken['Id']);
           loginStatus.setLoginStatus(true);
-          print("userId: " + decodedToken['Id']);
         }
       } else {
         loginStatus.setLoginStatus(false);
-        print('No token found');
       }
     });
   }
@@ -108,10 +105,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginStatus = Provider.of<LoginStatus>(context);
+    Provider.of<LoginStatus>(context);
     String token = Provider.of<AuthToken>(context).token;
-    print('main.dart ${loginStatus.isLoggedIn}');
-    print('main.dart $token');
 
     final List<Widget> widgetOptions = [
       HomePage(token: token),

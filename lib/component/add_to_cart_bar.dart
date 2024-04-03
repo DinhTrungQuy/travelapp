@@ -55,7 +55,8 @@ class _AddToCartBarState extends State<AddToCartBar> {
             onTap: () async {
               final SharedPreferences prefs =
                   await SharedPreferences.getInstance();
-              if (prefs.getString('token') == null) {
+              if (prefs.getString('token') == null ||
+                  prefs.getString('token') == '') {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text(
@@ -74,7 +75,6 @@ class _AddToCartBarState extends State<AddToCartBar> {
                               BookingPage(place: widget.place)));
                 }
               }
-              print('Book now Button');
             },
             title: 'Book now',
           ),

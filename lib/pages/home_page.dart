@@ -84,44 +84,42 @@ class _HomeState extends State<HomePage> with TickerProviderStateMixin {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          child: TabBar(
-                            tabAlignment: TabAlignment.start,
-                            isScrollable: true,
-                            labelPadding: const EdgeInsets.only(left: 25, right: 25),
-                            controller: _tabController,
-                            labelColor: Colors.white,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.red[100]),
-                            splashBorderRadius: BorderRadius.circular(50),
-                            indicator: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(50), // Creates border
-                              color: Colors.red[400],
-                            ),
-                            unselectedLabelColor: Colors.grey,
-                            tabs: const [
-                              Text(
-                                'All',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                'Popular',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                'Recommended',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
+                        TabBar(
+                          tabAlignment: TabAlignment.start,
+                          isScrollable: true,
+                          labelPadding: const EdgeInsets.only(left: 25, right: 25),
+                          controller: _tabController,
+                          labelColor: Colors.white,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          overlayColor:
+                              MaterialStateProperty.all(Colors.red[100]),
+                          splashBorderRadius: BorderRadius.circular(50),
+                          indicator: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(50), // Creates border
+                            color: Colors.red[400],
                           ),
+                          unselectedLabelColor: Colors.grey,
+                          tabs: const [
+                            Text(
+                              'All',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              'Popular',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              'Recommended',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 10,

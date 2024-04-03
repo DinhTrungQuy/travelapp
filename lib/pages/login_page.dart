@@ -33,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove("token");
       await prefs.setString("token", response.body);
@@ -48,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     errorMessage = "";
   }
@@ -176,7 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                               loginStatus.setLoginStatus(value);
                             });
                           });
-                          //TODO: login
                           if (loginStatus.isLoggedIn == true) {
                             Navigator.pop(context);
                             selectedIndex.setIndex(0);
