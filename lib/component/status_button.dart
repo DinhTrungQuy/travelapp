@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -94,6 +95,21 @@ class _StatusButtonState extends State<StatusButton> {
   @override
   Widget build(BuildContext context) {
     Future<void> handleRating(int ratingValue, String comment) async {
+      final prefs = await SharedPreferences.getInstance();
+      String token = prefs.getString("token") ?? "";
+      String userId = prefs.getString("userId") ?? "";
+      await http.post(
+          Uri.parse('https://quydt.speak.vn/api/Rating/${widget.bookingId}'),
+          headers: {
+            HttpHeaders.authorizationHeader: 'Bearer $token',
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode(<String, dynamic>{
+            "userId": userId,
+            "placeId": widget.place.id,
+            "ratingValue": ratingValue.toString(),
+            "comment": comment,
+          }));
       widget.onStatusChanged();
     }
 
@@ -138,7 +154,8 @@ class _StatusButtonState extends State<StatusButton> {
                 handleCancel();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
@@ -167,7 +184,8 @@ class _StatusButtonState extends State<StatusButton> {
                 setState(() {});
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(5),
